@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Resource Files\Managers">
+      <UniqueIdentifier>{47f57ea0-d012-4951-8525-b9effa7d415c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Includes">
+      <UniqueIdentifier>{1e7a10fa-ec63-4e65-a1ac-0034ed077304}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\States">
+      <UniqueIdentifier>{b2ae3651-b148-429d-b653-233608d1c749}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Objects">
+      <UniqueIdentifier>{296f145d-5fd7-4408-8aa9-2dda422932ce}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Game.cpp">
+      <Filter>Resource Files\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="StateManager.cpp">
+      <Filter>Resource Files\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="InputManager.cpp">
+      <Filter>Resource Files\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="AssetManager.cpp">
+      <Filter>Resource Files\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MainState.cpp">
+      <Filter>Resource Files\States</Filter>
+    </ClCompile>
+    <ClCompile Include="Grid.cpp">
+      <Filter>Resource Files\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="TileMap.cpp">
+      <Filter>Resource Files\Objects</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Game.h">
+      <Filter>Resource Files\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="DEFENITIONS.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="StateManager.h">
+      <Filter>Resource Files\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="State.h">
+      <Filter>Resource Files\Includes</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManager.h">
+      <Filter>Resource Files\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="AssetManager.h">
+      <Filter>Resource Files\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="MainState.h">
+      <Filter>Resource Files\States</Filter>
+    </ClInclude>
+    <ClInclude Include="Grid.h">
+      <Filter>Resource Files\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="TileMap.h">
+      <Filter>Resource Files\Objects</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
