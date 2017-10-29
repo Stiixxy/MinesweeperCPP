@@ -51,6 +51,9 @@
     <ClCompile Include="TileMap.cpp">
       <Filter>Resource Files\Objects</Filter>
     </ClCompile>
+    <ClCompile Include="EventSaver.cpp">
+      <Filter>Resource Files\Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -78,6 +81,9 @@
       <Filter>Resource Files\Objects</Filter>
     </ClInclude>
     <ClInclude Include="TileMap.h">
+      <Filter>Resource Files\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="EventSaver.h">
       <Filter>Resource Files\Objects</Filter>
     </ClInclude>
   </ItemGroup>
