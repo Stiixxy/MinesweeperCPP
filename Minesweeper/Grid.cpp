@@ -1,5 +1,6 @@
 #include <vector>
 #include <queue>
+#include <stdio.h>
 
 #include "Grid.h"
 #include "DEFENITIONS.h"
@@ -43,6 +44,7 @@ int Grid::ClickTile(int x, int y) {
 	m_clicked[GetIndex(x, y)] = GetBombs(x, y);
 	if (m_clicked[GetIndex(x, y)] == 0)
 		ClickAdjecent(x, y);//Its a 0 so click adjecent
+
 	return m_clicked[GetIndex(x, y)];
 }
 
@@ -109,68 +111,8 @@ bool Grid::ToggleFlag(int x, int y) {
 }
 
 void Grid::ClickAdjecent(int x, int y) {
-	/*for (int dx = -1; dx <= 1; dx++) {
-		for (int dy = -1; dy <= 1; dy++) {
-			if (!IsInGrid(x + dx, y + dy)) continue;
-			ClickTile(x + dx, y + dy);
-		}
-	}*/
-
-	//Add clicked to open array
-	//while open array > 0
-	//	check if neighboard is not in open or closed
-	//		if it neighboards bombs set the bombs and add it to closed
-	//		if it doesnt neighboar bombs set it and add it to open
-	//	add current to closed
-
-	/*
-	std::vector<sf::Vector2i> open;
-	std::vector<sf::Vector2i> closed;
-
-	open.push_back(sf::Vector2i(x, y));
-	m_clicked[GetIndex(x, y)] = GetBombs(x, y);
-	while (open.size() > 0) {
-		//Get all neighboars of current
-		sf::Vector2i current = open.at(0);
-
-		for (int dx = -1; dx <= 1; dx++) {
-			for (int dy = -1; dy <= 1; dy++) {
-				if (!IsInGrid(current.x + dx, current.y + dy)) continue;
-				if (IsBomb(current.x + dx, current.y + dy)) continue;
-				bool isInOne = false;
-				for (int i = 0; i < open.size(); i++) {
-					if (open.at(i).x == current.x + dx && open.at(i).y == current.y + dy) {
-						isInOne = true;
-						break;
-					}
-				}
-				if (isInOne) continue;
-				for (int i = 0; i < closed.size(); i++) {
-					if (closed.at(i).x == current.x + dx && closed.at(i).y == current.y + dy) {
-						isInOne = true;
-						break;
-					}
-				}
-				if (isInOne) continue;
-				int bombCount = GetBombs(current.x + dx, current.y + dy);
-				m_clicked[GetIndex(current.x + dx, current.y + dy)] = bombCount;
-				if (bombCount != 0) {
-					closed.push_back(sf::Vector2i(current.x + dx, current.y + dy));
-				} else {
-					open.push_back(sf::Vector2i(current.x + dx, current.y + dy));
-				}
-			}
-		}
-		open.erase(open.begin());
-		closed.push_back(current);
-	}
-	tilesRemaining += 1; //The one that was removing in the click tile function
-	tilesRemaining -= closed.size();
-	*/
-
-
 	//Using flood fill
-	tilesRemaining++; //The one that was removing from clicktile
+	//tilesRemaining++; //The one that was removing from clicktile
 	if (GetBombs(x, y) != 0) return;
 	std::queue<sf::Vector2i> positions;
 	positions.push(sf::Vector2i(x, y));
@@ -181,11 +123,11 @@ void Grid::ClickAdjecent(int x, int y) {
 		for (int dx = currentPos.x - 1; dx <= currentPos.x + 1; dx++) {
 			for (int dy = currentPos.y - 1; dy <= currentPos.y + 1; dy++) {
 				if (!IsInGrid(dx, dy)) continue;
-				if (m_clicked[GetIndex(dx, dy)] == 0) continue;
+				if (m_clicked[GetIndex(dx, dy)] != TILE_TYPES::UNCLICKED) continue;
 				int bombs = GetBombs(dx, dy);
 				m_clicked[GetIndex(dx, dy)] = bombs;
 				tilesRemaining--;
-				if (bombs == 0) {	
+				if (bombs == 0) {
 					positions.push(sf::Vector2i(dx, dy));
 				}
 			}
