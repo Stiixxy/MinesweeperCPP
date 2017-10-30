@@ -8,17 +8,16 @@ void MainState::Init() {
 	_data->assetManager.LoadTexture("Minesweeper spritesheet", TILE_SPRITESHEET);
 	saver = new EventSaver();
 
-	if (!LoadFromFile(DEFAULT_SAVE_PATH)) {
-		grid = new Grid(DEFAULT_GRID_WIDTH, DEFAULT_GRID_HEIGHT, saver);
-		grid->RandomiseBombs(DEFAULT_GRID_BOMBS);
-	}
+	grid = new Grid(DEFAULT_GRID_WIDTH, DEFAULT_GRID_HEIGHT, saver);
+	grid->RandomiseBombs(DEFAULT_GRID_BOMBS);
+
 	map = new TileMap();
 
 	map->setTexture(&_data->assetManager.GetTexture("Minesweeper spritesheet"));
 	UpdateMap();
 
 	gridView = sf::View(sf::FloatRect(0, 0, grid->GetSize().x * SPRITE_WIDTH, grid->GetSize().y * SPRITE_HEIGHT));
-	
+
 }
 
 void MainState::BeforeDestroy() {
@@ -78,10 +77,10 @@ void MainState::PollEvents(float dt) {
 
 void MainState::HandleInput(float dt) {
 	//Zooming
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::PageUp)) {
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::PageDown)) {
 		gridView.zoom(1.01);
 	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::PageDown)) {
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::PageUp)) {
 		gridView.zoom(0.99);
 	}
 
@@ -102,7 +101,7 @@ void MainState::HandleInput(float dt) {
 	//Fix position
 	if (gridView.getCenter().x - gridView.getSize().x / 2 < 0) gridView.setCenter(gridView.getSize().x / 2, gridView.getCenter().y);
 	if (gridView.getCenter().y - gridView.getSize().y / 2 < 0) gridView.setCenter(gridView.getCenter().x, gridView.getSize().y / 2);
-	
+
 	if (gridView.getSize().x > grid->GetSize().x * SPRITE_WIDTH) gridView.setSize(grid->GetSize().x * SPRITE_WIDTH, gridView.getSize().y);
 	if (gridView.getSize().y > grid->GetSize().y * SPRITE_HEIGHT) gridView.setSize(gridView.getSize().x, grid->GetSize().y * SPRITE_HEIGHT);
 
@@ -118,10 +117,18 @@ void MainState::HandleInput(float dt) {
 		UpdateMap();
 	}
 
-	//Save game
+	//Save and load game
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
 		if (saver->SaveEventsToFile(DEFAULT_SAVE_PATH)) {
 			_data->window.close();
+		}
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::L)) {
+		static bool hasLoaded = false;
+		if (!hasLoaded) {
+			LoadFromFile(DEFAULT_SAVE_PATH);
+			hasLoaded = true;
+			UpdateMap();
 		}
 	}
 }
