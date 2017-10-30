@@ -1,10 +1,11 @@
 #include "DEFENITIONS.h"
 #include "MainState.h" 
 #include "EventSaver.h"
+#include "Event.h"
+#include <iostream>
 
 void MainState::Init() {
 	_data->assetManager.LoadTexture("Minesweeper spritesheet", TILE_SPRITESHEET);
-	_data->assetManager.LoadTexture("Minesweeper temp", "Resources/tile0.png");
 
 	grid = new Grid(DEFAULT_GRID_WIDTH, DEFAULT_GRID_HEIGHT);
 	map = new TileMap();

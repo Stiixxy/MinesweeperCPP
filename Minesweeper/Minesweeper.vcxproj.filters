@@ -86,5 +86,8 @@
     <ClInclude Include="EventSaver.h">
       <Filter>Resource Files\Objects</Filter>
     </ClInclude>
+    <ClInclude Include="Event.h">
+      <Filter>Resource Files\Includes</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

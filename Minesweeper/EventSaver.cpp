@@ -1,4 +1,5 @@
 #include "EventSaver.h"
+#include "Event.h"
 #include <stdio.h>
 #include <iostream>
 
@@ -13,7 +14,8 @@ bool EventSaver::LoadEventsFromFile(std::string fileName) {
 
 	while (std::getline(dataStream, line))
 	{
-		events.push_back(line);
+		Event e(line);
+		events.push_back(e);
 	}
 	dataStream.close();
 	return true;
@@ -29,7 +31,8 @@ bool EventSaver::SaveEventsToFile(std::string fileName) {
 	}
 
 	for (int i = 0; i < events.size(); i++) {
-		dataStream << events.at(i) << "\n";
+		std::string line = events.at(i).ToString();
+		dataStream << line << '\n';
 	}
 	dataStream.close();
 	return true;
@@ -43,15 +46,15 @@ void EventSaver::SetEventCounter(int counter) {
 	eventCounter = counter;
 }
 
-std::string EventSaver::GetNextEvent() {
-	if (eventCounter >= events.size()) return NULL;
+Event EventSaver::GetNextEvent() {
+	if (eventCounter >= events.size()) return{ EVENT_TYPES::EVENT_UNKNOWN, -1, -1 };
 	return events.at(eventCounter++);
 }
 
-std::vector<std::string> EventSaver::GetAllEvents() {
+std::vector<Event> EventSaver::GetAllEvents() {
 	return events;
 }
 
-void EventSaver::AddEvent(std::string event) {
+void EventSaver::AddEvent(Event event) {
 	events.push_back(event);
 }

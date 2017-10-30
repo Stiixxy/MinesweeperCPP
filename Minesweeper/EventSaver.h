@@ -6,6 +6,8 @@
 
 #include <SFML\Graphics.hpp>
 
+#include "Event.h"
+
 class EventSaver {
 public:
 	EventSaver() {}
@@ -16,12 +18,12 @@ public:
 	int GetEventCounter();
 	void SetEventCounter(int);
 
-	std::string GetNextEvent();
-	std::vector<std::string> GetAllEvents();
-	void AddEvent(std::string);
+	Event GetNextEvent();
+	std::vector<Event> GetAllEvents();
+	void AddEvent(Event);
 
 private:
 	std::fstream dataStream;
-	std::vector<std::string> events;
+	std::vector<Event> events;
 	int eventCounter;
 };
