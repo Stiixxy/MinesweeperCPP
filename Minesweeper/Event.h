@@ -7,7 +7,11 @@
 
 enum EVENT_TYPES {
 	EVENT_UNKNOWN = -1,
-	TILE_CLICKED = 0,
+	GRID_CREATED = 0,
+	ADD_POINTS = 1,
+	TILE_CLICKED = 2,
+	BOMB_ADDED = 3,
+	FLAG_TOGGLED = 4,
 };
 
 class Event {
@@ -20,8 +24,7 @@ public:
 			elements.push_back(segment);
 		}
 		std::string eventTypeString = elements.at(0);
-		if (eventTypeString == "0") type = EVENT_TYPES::TILE_CLICKED;
-
+		type = (EVENT_TYPES)(std::stoi(elements.at(0)));
 
 
 		x = std::stoi(elements.at(1));
