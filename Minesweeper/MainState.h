@@ -6,6 +6,7 @@
 #include "Grid.h"
 #include "TileMap.h"
 #include "EventSaver.h"
+#include "MainStateGui.h"
 
 class MainState : public State {
 public:
@@ -23,6 +24,7 @@ public:
 	void UpdateMap();
 	bool LoadFromFile(std::string);
 private:
+	MainStateGui *gui;
 	GameDataRef _data;
 	Grid *grid;
 	TileMap *map;
@@ -32,4 +34,5 @@ private:
 
 	bool _clickedLastFrame = false;
 	bool _alive = true;
+	int points = 0;
 };

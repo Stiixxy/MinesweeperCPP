@@ -25,6 +25,9 @@
     <Filter Include="Resource Files\Objects">
       <UniqueIdentifier>{296f145d-5fd7-4408-8aa9-2dda422932ce}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\GUI">
+      <UniqueIdentifier>{1c1c09cb-83e2-4894-9bd8-d26222cc83a1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -53,6 +56,9 @@
     </ClCompile>
     <ClCompile Include="EventSaver.cpp">
       <Filter>Resource Files\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="MainStateGui.cpp">
+      <Filter>Resource Files\GUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -87,6 +93,12 @@
       <Filter>Resource Files\Objects</Filter>
     </ClInclude>
     <ClInclude Include="Event.h">
+      <Filter>Resource Files\Includes</Filter>
+    </ClInclude>
+    <ClInclude Include="MainStateGui.h">
+      <Filter>Resource Files\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Gui.h">
       <Filter>Resource Files\Includes</Filter>
     </ClInclude>
   </ItemGroup>

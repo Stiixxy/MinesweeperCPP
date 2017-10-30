@@ -6,6 +6,7 @@
 
 void MainState::Init() {
 	_data->assetManager.LoadTexture("Minesweeper spritesheet", TILE_SPRITESHEET);
+	_data->assetManager.LoadTexture("Minesweeper numbers", NUMBERS_SPRITESHEET);
 	saver = new EventSaver();
 
 	grid = new Grid(DEFAULT_GRID_WIDTH, DEFAULT_GRID_HEIGHT, saver);
@@ -17,17 +18,22 @@ void MainState::Init() {
 	UpdateMap();
 
 	gridView = sf::View(sf::FloatRect(0, 0, grid->GetSize().x * SPRITE_WIDTH, grid->GetSize().y * SPRITE_HEIGHT));
+	gridView.setViewport(sf::FloatRect(0, 1 - GRID_Y_PERCENTAGE, 1, GRID_Y_PERCENTAGE));
 
+	gui = new MainStateGui(&points, &_data->assetManager.GetTexture("Minesweeper numbers"));
 }
 
 void MainState::BeforeDestroy() {
 	_data->assetManager.UnloadTexture("Minesweeper spritesheet");
+	_data->assetManager.UnloadTexture("Minesweeper numbers");
 }
 
 void MainState::Update(float dt) {
+	_data->window.setView(gridView);
 	PollEvents(dt);
 	if (!_data->window.hasFocus()) return;
 	HandleInput(dt);
+	gui->Update();
 
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && _alive && !grid->HasWon()) {
 		if (!_clickedLastFrame) {
@@ -54,6 +60,7 @@ void MainState::Update(float dt) {
 	} else {
 		_clickedLastFrame = false;
 	}
+	points += grid->GetAndClearPoints();
 
 }
 
@@ -64,6 +71,7 @@ void MainState::UpdateMap() {
 void MainState::Draw() {
 	_data->window.setView(gridView);
 	_data->window.draw(*map);
+	_data->window.draw(*gui);
 }
 
 void MainState::PollEvents(float dt) {
@@ -111,7 +119,10 @@ void MainState::HandleInput(float dt) {
 
 	//reset game
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::R)) {
-		saver->ClearEvents();
+		if (!grid->HasWon()) {
+			points = 0;
+			saver->ClearEvents();
+		}
 		grid = new Grid(DEFAULT_GRID_WIDTH, DEFAULT_GRID_HEIGHT, saver);
 		grid->RandomiseBombs(DEFAULT_GRID_BOMBS);
 		_alive = true;
@@ -132,6 +143,7 @@ void MainState::HandleInput(float dt) {
 			UpdateMap();
 		}
 	}
+
 }
 
 bool MainState::LoadFromFile(std::string fileName) {

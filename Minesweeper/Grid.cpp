@@ -53,6 +53,7 @@ int Grid::ClickTile(int x, int y) {
 	}
 
 	tilesRemaining--;
+	currentPoints++;
 	m_clicked[GetIndex(x, y)] = GetBombs(x, y);
 	if (m_clicked[GetIndex(x, y)] == 0)
 		ClickAdjecent(x, y);//Its a 0 so click adjecent
@@ -141,6 +142,7 @@ void Grid::ClickAdjecent(int x, int y) {
 				int bombs = GetBombs(dx, dy);
 				m_clicked[GetIndex(dx, dy)] = bombs;
 				tilesRemaining--;
+				currentPoints++;
 				if (bombs == 0) {
 					positions.push(sf::Vector2i(dx, dy));
 				}
@@ -152,7 +154,7 @@ void Grid::ClickAdjecent(int x, int y) {
 }
 
 bool Grid::HasWon() {
-	return (tilesRemaining <= 0);
+	return (tilesRemaining <= 0);  
 }
 
 void Grid::ShowBombs() {
@@ -162,4 +164,12 @@ void Grid::ShowBombs() {
 				m_clicked[GetIndex(x, y)] = TILE_TYPES::BOMB_SHOWED;
 		}
 	}
+}
+
+int Grid::GetAndClearPoints() {
+	int returnValue = currentPoints;
+	currentPoints = 0;
+	if (returnValue > 0)
+		return returnValue;
+	return returnValue;
 }

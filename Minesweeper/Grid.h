@@ -40,10 +40,12 @@ public:
 	int* GetTiles();
 	sf::Vector2i MouseToGridPos(sf::Vector2f);
 	sf::Vector2u GetSize();
+	int GetAndClearPoints();
 private:
 	bool* m_bombs;
 	int* m_clicked;
 	EventSaver* eventSaver;
 	int tilesRemaining;
 	sf::Vector2u _size;
+	int currentPoints = 0;
 };
