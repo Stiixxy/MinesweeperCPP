@@ -14,7 +14,16 @@ Grid::Grid(int width, int height) : _size(width, height), m_bombs(new bool[width
 	for (int i = 0; i < width * height; i++) {
 		m_clicked[i] = TILE_TYPES::UNCLICKED;
 	}
+}
 
+Grid::Grid(int width, int height, EventSaver* saver) : _size(width, height), m_bombs(new bool[width * height]), m_clicked(new int[width * height]), tilesRemaining(width*height), eventSaver(saver) {
+	for (int i = 0; i < width * height; i++) {
+		m_bombs[i] = false;
+	}
+
+	for (int i = 0; i < width * height; i++) {
+		m_clicked[i] = TILE_TYPES::UNCLICKED;
+	}
 }
 
 void Grid::RandomiseBombs(int bombCount) {

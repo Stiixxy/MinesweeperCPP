@@ -2,6 +2,7 @@
 
 #include <SFML\Graphics.hpp>
 #include <stdlib.h>
+#include "EventSaver.h"
 
 enum TILE_RETURNS{
 	BOMB = -1,
@@ -19,6 +20,8 @@ enum TILE_TYPES {
 class Grid {
 public:
 	Grid(int width, int height);
+	Grid(int width, int height, EventSaver* saver);
+
 	~Grid() {}
 
 	int GetIndex(int x, int y);
@@ -40,6 +43,7 @@ public:
 private:
 	bool* m_bombs;
 	int* m_clicked;
+	EventSaver* eventSaver;
 	int tilesRemaining;
 	sf::Vector2u _size;
 };

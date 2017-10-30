@@ -28,6 +28,7 @@
 #define DEFAULT_GRID_WIDTH	50
 #define DEFAULT_GRID_HEIGHT	50
 #define DEFAULT_GRID_BOMBS	10
+#define DEFAULT_SAVE		"Resources/save.txt"
 
 #pragma endregion
 
