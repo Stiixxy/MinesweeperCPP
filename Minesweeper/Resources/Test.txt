@@ -1,0 +1,6 @@
+some line
+another line
+3rd line to read
+line with weird char &$#@*$&!_
+and some more stuff
+293122313

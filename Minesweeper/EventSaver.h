@@ -1,6 +1,6 @@
 #pragma once
 #include <string>
-#include <queue>
+#include <vector>
 #include <iostream>
 #include <fstream>
 
@@ -16,8 +16,12 @@ public:
 	int GetEventCounter();
 	void SetEventCounter(int);
 
+	std::string GetNextEvent();
+	std::vector<std::string> GetAllEvents();
+	void AddEvent(std::string);
+
 private:
 	std::fstream dataStream;
-	std::queue<std::string> events;
+	std::vector<std::string> events;
 	int eventCounter;
 };
