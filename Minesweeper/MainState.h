@@ -1,9 +1,11 @@
 #pragma once
+#include <string>
 
 #include "State.h"
 #include "Game.h"
 #include "Grid.h"
 #include "TileMap.h"
+#include "EventSaver.h"
 
 class MainState : public State {
 public:
@@ -17,10 +19,14 @@ public:
 
 	void PollEvents(float dt);
 	void HandleInput(float dt);
+
+	void UpdateMap();
+	bool LoadFromFile(std::string);
 private:
 	GameDataRef _data;
 	Grid *grid;
 	TileMap *map;
+	EventSaver *saver;
 
 	sf::View gridView;
 

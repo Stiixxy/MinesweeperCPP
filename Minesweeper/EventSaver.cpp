@@ -46,9 +46,10 @@ void EventSaver::SetEventCounter(int counter) {
 	eventCounter = counter;
 }
 
-Event EventSaver::GetNextEvent() {
-	if (eventCounter >= events.size()) return{ EVENT_TYPES::EVENT_UNKNOWN, -1, -1 };
-	return events.at(eventCounter++);
+bool EventSaver::GetNextEvent(Event &event) {
+	if (eventCounter >= events.size()) return false;
+	event = events.at(eventCounter++);
+	return true;
 }
 
 std::vector<Event> EventSaver::GetAllEvents() {
@@ -56,5 +57,18 @@ std::vector<Event> EventSaver::GetAllEvents() {
 }
 
 void EventSaver::AddEvent(Event event) {
+	if (_paused) return;
 	events.push_back(event);
+}
+
+void EventSaver::Pause() {
+	_paused = true;
+}
+
+void EventSaver::Resume() {
+	_paused = false;
+}
+
+void EventSaver::ClearEvents() {
+	events.clear();
 }

@@ -18,12 +18,15 @@ public:
 	int GetEventCounter();
 	void SetEventCounter(int);
 
-	Event GetNextEvent();
+	bool GetNextEvent(Event &event);
 	std::vector<Event> GetAllEvents();
 	void AddEvent(Event);
-
+	void Pause();
+	void Resume();
+	void ClearEvents();
 private:
 	std::fstream dataStream;
 	std::vector<Event> events;
-	int eventCounter;
+	int eventCounter = 0;
+	bool _paused = false;
 };

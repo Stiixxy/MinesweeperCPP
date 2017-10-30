@@ -36,6 +36,7 @@ public:
 		x = nx;
 		y = ny;
 	}
+	Event() {}
 
 	std::string ToString() {
 		std::string string = std::to_string(type) + ":" + std::to_string(x) + ":" + std::to_string(y);

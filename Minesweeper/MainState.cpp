@@ -6,16 +6,19 @@
 
 void MainState::Init() {
 	_data->assetManager.LoadTexture("Minesweeper spritesheet", TILE_SPRITESHEET);
+	saver = new EventSaver();
 
-	grid = new Grid(DEFAULT_GRID_WIDTH, DEFAULT_GRID_HEIGHT);
+	if (!LoadFromFile(DEFAULT_SAVE_PATH)) {
+		grid = new Grid(DEFAULT_GRID_WIDTH, DEFAULT_GRID_HEIGHT, saver);
+		grid->RandomiseBombs(DEFAULT_GRID_BOMBS);
+	}
 	map = new TileMap();
 
 	map->setTexture(&_data->assetManager.GetTexture("Minesweeper spritesheet"));
-	map->setTiles(sf::Vector2u(SPRITE_WIDTH, SPRITE_HEIGHT), grid->GetTiles(), grid->GetSize().x, grid->GetSize().y);
+	UpdateMap();
 
 	gridView = sf::View(sf::FloatRect(0, 0, grid->GetSize().x * SPRITE_WIDTH, grid->GetSize().y * SPRITE_HEIGHT));
-
-	grid->RandomiseBombs(DEFAULT_GRID_BOMBS);
+	
 }
 
 void MainState::BeforeDestroy() {
@@ -38,7 +41,7 @@ void MainState::Update(float dt) {
 			if (grid->HasWon())
 				grid->ShowBombs();
 
-			if (result != TILE_RETURNS::ALREAD_CLICKED) map->setTiles(sf::Vector2u(SPRITE_WIDTH, SPRITE_HEIGHT), grid->GetTiles(), grid->GetSize().x, grid->GetSize().y);
+			if (result != TILE_RETURNS::ALREAD_CLICKED) UpdateMap();
 			if (result == TILE_RETURNS::BOMB) _alive = false;
 		}
 	} else if (sf::Mouse::isButtonPressed(sf::Mouse::Right) && _alive && !grid->HasWon()) {
@@ -47,12 +50,16 @@ void MainState::Update(float dt) {
 			sf::Vector2i mousePos = _data->inputManager.GetMousePosition();
 			sf::Vector2f worldPos = _data->window.mapPixelToCoords(mousePos);
 			sf::Vector2i tilePos = grid->MouseToGridPos(worldPos);
-			if (grid->ToggleFlag(tilePos.x, tilePos.y)) map->setTiles(sf::Vector2u(SPRITE_WIDTH, SPRITE_HEIGHT), grid->GetTiles(), grid->GetSize().x, grid->GetSize().y);
+			if (grid->ToggleFlag(tilePos.x, tilePos.y)) UpdateMap();
 		}
 	} else {
 		_clickedLastFrame = false;
 	}
 
+}
+
+void MainState::UpdateMap() {
+	map->setTiles(sf::Vector2u(SPRITE_WIDTH, SPRITE_HEIGHT), grid->GetTiles(), grid->GetSize().x, grid->GetSize().y);
 }
 
 void MainState::Draw() {
@@ -105,6 +112,41 @@ void MainState::HandleInput(float dt) {
 
 	//reset game
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::R)) {
-		_data->stateManager.AddState(StateRef(new MainState(_data)));
+		saver->ClearEvents();
+		grid = new Grid(DEFAULT_GRID_WIDTH, DEFAULT_GRID_HEIGHT, saver);
+		grid->RandomiseBombs(DEFAULT_GRID_BOMBS);
+		UpdateMap();
 	}
+
+	//Save game
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
+		if (saver->SaveEventsToFile(DEFAULT_SAVE_PATH)) {
+			_data->window.close();
+		}
+	}
+}
+
+bool MainState::LoadFromFile(std::string fileName) {
+	if (!saver->LoadEventsFromFile(fileName)) return false;
+	saver->Pause();
+
+	Event e;
+	while (saver->GetNextEvent(e)) {
+		switch (e.type) {
+		case EVENT_TYPES::GRID_CREATED:
+			grid = new Grid(e.x, e.y, saver);
+			break;
+		case EVENT_TYPES::BOMB_ADDED:
+			grid->AddBomb(e.x, e.y);
+			break;
+		case EVENT_TYPES::FLAG_TOGGLED:
+			grid->ToggleFlag(e.x, e.y);
+			break;
+		case EVENT_TYPES::TILE_CLICKED:
+			grid->ClickTile(e.x, e.y);
+			break;
+		}
+	}
+
+	saver->Resume();
 }

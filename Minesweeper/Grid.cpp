@@ -24,6 +24,8 @@ Grid::Grid(int width, int height, EventSaver* saver) : _size(width, height), m_b
 	for (int i = 0; i < width * height; i++) {
 		m_clicked[i] = TILE_TYPES::UNCLICKED;
 	}
+
+	eventSaver->AddEvent(Event(EVENT_TYPES::GRID_CREATED, width, height));
 }
 
 void Grid::RandomiseBombs(int bombCount) {
@@ -39,6 +41,7 @@ void Grid::RandomiseBombs(int bombCount) {
 void Grid::AddBomb(int x, int y) {
 	m_bombs[GetIndex(x, y)] = true;
 	tilesRemaining--;
+	if (eventSaver != NULL) eventSaver->AddEvent(Event(EVENT_TYPES::BOMB_ADDED, x, y));
 }
 
 int Grid::ClickTile(int x, int y) {
@@ -54,6 +57,7 @@ int Grid::ClickTile(int x, int y) {
 	if (m_clicked[GetIndex(x, y)] == 0)
 		ClickAdjecent(x, y);//Its a 0 so click adjecent
 
+	if (eventSaver != NULL) eventSaver->AddEvent(Event(EVENT_TYPES::TILE_CLICKED, x, y));
 	return m_clicked[GetIndex(x, y)];
 }
 
@@ -116,6 +120,7 @@ bool Grid::ToggleFlag(int x, int y) {
 		m_clicked[GetIndex(x, y)] = TILE_TYPES::FLAGGED;
 	}
 
+	if (eventSaver != NULL) eventSaver->AddEvent(Event(EVENT_TYPES::FLAG_TOGGLED, x, y));
 	return true;
 }
 
