@@ -24,6 +24,7 @@ void MainState::BeforeDestroy() {
 
 void MainState::Update(float dt) {
 	PollEvents(dt);
+	if (!_data->window.hasFocus()) return;
 	HandleInput(dt);
 
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && _alive && !grid->HasWon()) {
