@@ -26,7 +26,7 @@ bool EventSaver::SaveEventsToFile(std::string fileName) {
 
 	std::string line;
 	if (!dataStream.is_open()) {
-		std::cout << "Somthing went wrong writing events to file \n" << fileName << "\n";
+		std::cout << "Somthing went wrong writing events to file " << fileName << "\n";
 		return false;
 	}
 

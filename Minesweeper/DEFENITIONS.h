@@ -25,8 +25,8 @@
 
 #pragma region Minesweeper settings
 
-#define DEFAULT_GRID_WIDTH	50
-#define DEFAULT_GRID_HEIGHT	50
+#define DEFAULT_GRID_WIDTH	20
+#define DEFAULT_GRID_HEIGHT	20
 #define DEFAULT_GRID_BOMBS	10
 #define DEFAULT_SAVE_PATH	"Resources/save.txt"
 
@@ -34,7 +34,7 @@
 
 #pragma region Grid view settings
 
-#define GRIDVIEW_MOVEMENT_SPEED		100
+#define GRIDVIEW_MOVEMENT_SPEED		200
 #define GRIDVIEW_ZOOM_SPEED			100
 
 #pragma endregion

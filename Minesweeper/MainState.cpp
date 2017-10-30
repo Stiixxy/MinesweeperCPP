@@ -85,16 +85,16 @@ void MainState::HandleInput(float dt) {
 	}
 
 	//Moving
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
 		gridView.move(-GRIDVIEW_MOVEMENT_SPEED * dt, 0);
 	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
 		gridView.move(GRIDVIEW_MOVEMENT_SPEED * dt, 0);
 	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
 		gridView.move(0, -GRIDVIEW_MOVEMENT_SPEED * dt);
 	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
 		gridView.move(0, GRIDVIEW_MOVEMENT_SPEED * dt);
 	}
 
@@ -114,13 +114,14 @@ void MainState::HandleInput(float dt) {
 		saver->ClearEvents();
 		grid = new Grid(DEFAULT_GRID_WIDTH, DEFAULT_GRID_HEIGHT, saver);
 		grid->RandomiseBombs(DEFAULT_GRID_BOMBS);
+		_alive = true;
 		UpdateMap();
 	}
 
 	//Save and load game
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::X)) {
 		if (saver->SaveEventsToFile(DEFAULT_SAVE_PATH)) {
-			_data->window.close();
+			printf("Succesfully saved game\n");
 		}
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::L)) {
