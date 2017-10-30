@@ -19,9 +19,11 @@ bool EventSaver::LoadEventsFromFile(std::string fileName) {
 }
 
 bool EventSaver::SaveEventsToFile(std::string fileName) {
+	return false;
 }
 
 int EventSaver::GetEventCounter() {
+	return -1;
 }
 
 void EventSaver::SetEventCounter(int) {
