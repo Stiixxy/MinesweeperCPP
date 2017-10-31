@@ -30,6 +30,8 @@ private:
 	TileMap *map;
 	EventSaver *saver;
 
+	float playTime = 0;
+
 	sf::View gridView;
 
 	bool _clickedLastFrame = false;

@@ -98,8 +98,5 @@
     <ClInclude Include="MainStateGui.h">
       <Filter>Resource Files\GUI</Filter>
     </ClInclude>
-    <ClInclude Include="Gui.h">
-      <Filter>Resource Files\Includes</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>

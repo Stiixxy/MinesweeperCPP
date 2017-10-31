@@ -20,7 +20,7 @@ void MainState::Init() {
 	gridView = sf::View(sf::FloatRect(0, 0, grid->GetSize().x * SPRITE_WIDTH, grid->GetSize().y * SPRITE_HEIGHT));
 	gridView.setViewport(sf::FloatRect(0, 1 - GRID_Y_PERCENTAGE, 1, GRID_Y_PERCENTAGE));
 
-	gui = new MainStateGui(&points, &_data->assetManager.GetTexture("Minesweeper numbers"));
+	gui = new MainStateGui(&points, &playTime,  &_data->assetManager.GetTexture("Minesweeper numbers"));
 }
 
 void MainState::BeforeDestroy() {
@@ -60,8 +60,12 @@ void MainState::Update(float dt) {
 	} else {
 		_clickedLastFrame = false;
 	}
-	points += grid->GetAndClearPoints();
 
+	if (_alive && !grid->HasWon()) {
+		playTime += dt;
+	}
+
+	points += grid->GetAndClearPoints();
 }
 
 void MainState::UpdateMap() {
@@ -118,15 +122,22 @@ void MainState::HandleInput(float dt) {
 
 
 	//reset game
+	static bool rWasPressed = false;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::R)) {
-		if (!grid->HasWon()) {
-			points = 0;
-			saver->ClearEvents();
+		if (!rWasPressed) {
+			if (!grid->HasWon()) {
+				points = 0;
+				playTime = 0;
+				saver->ClearEvents();
+			}
+			grid = new Grid(DEFAULT_GRID_WIDTH, DEFAULT_GRID_HEIGHT, saver);
+			grid->RandomiseBombs(DEFAULT_GRID_BOMBS);
+			_alive = true;
+			UpdateMap();
+			rWasPressed = true;
 		}
-		grid = new Grid(DEFAULT_GRID_WIDTH, DEFAULT_GRID_HEIGHT, saver);
-		grid->RandomiseBombs(DEFAULT_GRID_BOMBS);
-		_alive = true;
-		UpdateMap();
+	} else {
+		rWasPressed = false;
 	}
 
 	//Save and load game

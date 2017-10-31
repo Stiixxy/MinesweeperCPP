@@ -166,7 +166,6 @@
     <ClInclude Include="EventSaver.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Grid.h" />
-    <ClInclude Include="Gui.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="MainState.h" />
     <ClInclude Include="MainStateGui.h" />

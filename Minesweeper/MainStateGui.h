@@ -8,20 +8,25 @@
 
 class MainStateGui : public sf::Transformable, public sf::Drawable {
 public:
-	MainStateGui(int* pointref, sf::Texture* tex) : _pointRefrence(pointref), m_texture(tex) {
-		view = sf::View(sf::FloatRect(0, 0, RENDER_NUMBERS * tex->getSize().x / 10, RENDER_NUMBERS * tex->getSize().y));
-		view.setViewport(sf::FloatRect(0, 0, 1, (1 - GRID_Y_PERCENTAGE) * 5));
-	}
+	MainStateGui(int* pointref,float*, sf::Texture* tex);
 	MainStateGui() {}
 
+	void Setup();
 	void Update();
 private:
 	virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const;
 
-	sf::View view;
+	void SetupVerticies(sf::VertexArray &);
+	void UpdateVerticies(sf::VertexArray &verticies, int numberToDraw);
+
+	sf::View pointsView;
 	int* _pointRefrence;
-	sf::VertexArray m_vertices;
+	sf::VertexArray score_verticies;
+
+	sf::View timeView;
+	float *timeRefrence;
+	sf::VertexArray time_vertices;
+
 	sf::Texture* m_texture;
 
-	
 };
