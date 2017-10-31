@@ -3,10 +3,10 @@
 
 MainStateGui::MainStateGui(int* pointref, float* clockref, sf::Texture* tex) : _pointRefrence(pointref), timeRefrence(clockref), m_texture(tex) {
 	pointsView = sf::View(sf::FloatRect(0, 0, RENDER_NUMBERS * tex->getSize().x / 10, RENDER_NUMBERS * tex->getSize().y));
-	pointsView.setViewport(sf::FloatRect(0, 0, 1, (1 - GRID_Y_PERCENTAGE) * 5)); //Still no idea why we need the 5 but it works i guess
+	pointsView.setViewport(sf::FloatRect(.6, 0, .5, (1 - GRID_Y_PERCENTAGE) * 5)); //Still no idea why we need the 5 but it works i guess
 
 	timeView = sf::View(sf::FloatRect(0, 0, RENDER_NUMBERS * tex->getSize().x / 10, RENDER_NUMBERS * tex->getSize().y));
-	timeView.setViewport(sf::FloatRect(0, 0, RENDER_NUMBERS * tex->getSize().x / 10, RENDER_NUMBERS * tex->getSize().y));
+	timeView.setViewport(sf::FloatRect(0, 0, .4, (1 - GRID_Y_PERCENTAGE) * 5));
 
 	Setup();
 }
@@ -47,6 +47,9 @@ void MainStateGui::draw(sf::RenderTarget &target, sf::RenderStates states) const
 	states.texture = m_texture;
 
 	target.setView(pointsView);
+	target.draw(score_verticies, states);
+
+	target.setView(timeView);
 	target.draw(time_vertices, states);
 }
 
