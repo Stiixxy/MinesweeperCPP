@@ -21,6 +21,7 @@ void MainState::Init() {
 	gridView.setViewport(sf::FloatRect(0, 1 - GRID_Y_PERCENTAGE, 1, GRID_Y_PERCENTAGE));
 
 	gui = new MainStateGui(&points, &playTime,  &_data->assetManager.GetTexture("Minesweeper numbers"));
+	
 }
 
 void MainState::BeforeDestroy() {

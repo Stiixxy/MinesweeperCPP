@@ -60,6 +60,12 @@
     <ClCompile Include="MainStateGui.cpp">
       <Filter>Resource Files\GUI</Filter>
     </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>Resource Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="MainMenuState.cpp">
+      <Filter>Resource Files\States</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -97,6 +103,12 @@
     </ClInclude>
     <ClInclude Include="MainStateGui.h">
       <Filter>Resource Files\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Button.h">
+      <Filter>Resource Files\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="MainMenuState.h">
+      <Filter>Resource Files\States</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

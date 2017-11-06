@@ -149,11 +149,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AssetManager.cpp" />
+    <ClCompile Include="Button.cpp" />
     <ClCompile Include="EventSaver.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Grid.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="MainMenuState.cpp" />
     <ClCompile Include="MainState.cpp" />
     <ClCompile Include="MainStateGui.cpp" />
     <ClCompile Include="StateManager.cpp" />
@@ -161,12 +163,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AssetManager.h" />
+    <ClInclude Include="Button.h" />
     <ClInclude Include="DEFENITIONS.h" />
     <ClInclude Include="Event.h" />
     <ClInclude Include="EventSaver.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Grid.h" />
     <ClInclude Include="InputManager.h" />
+    <ClInclude Include="MainMenuState.h" />
     <ClInclude Include="MainState.h" />
     <ClInclude Include="MainStateGui.h" />
     <ClInclude Include="State.h" />
