@@ -5,6 +5,7 @@
 #include "Game.h"
 
 #include "Button.h"
+#include "Button.cpp"
 
 class MainMenuState : public State {
 public:
@@ -21,7 +22,5 @@ public:
 private:
 	GameDataRef _data;
 
-	Button *b;
+	Button<MainMenuState> *b;
 };
-
-void OnButtonClicked(void *creator);

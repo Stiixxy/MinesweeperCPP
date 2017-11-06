@@ -3,7 +3,7 @@
 void MainMenuState::Init() {
 	_data->assetManager.LoadTexture("button", "Resources/numbers.png");
 
-	b = new Button(sf::Sprite(_data->assetManager.GetTexture("button")), _data, &OnButtonClicked, (void*)this);
+	b = new Button<MainMenuState>(sf::Sprite(_data->assetManager.GetTexture("button")), _data, &MainMenuState::InMemberFunction, this);
 	b->Center();
 
 }
@@ -15,6 +15,7 @@ void MainMenuState::Update(float dt) {
 }
 
 void MainMenuState::Draw() {
+	if (temp)return;
 	_data->window.draw(*b);
 }
 
@@ -29,10 +30,4 @@ void MainMenuState::PollEvents(float dt) {
 
 void MainMenuState::InMemberFunction() {
 	printf("This is called from the inside the main menu state\n");
-}
-
-void OnButtonClicked(void * creator){
-	MainMenuState *state = (MainMenuState*)creator;
-
-	state->InMemberFunction();
 }

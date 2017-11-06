@@ -1,10 +1,12 @@
 #include "Button.h"
 
-Button::Button(sf::Sprite spr, GameDataRef _data, void(*onclick)(void *creator), void *creator) : _sprite(spr), data(_data), onClick(onclick), _creator(creator) {
+template <class T>
+Button<T>::Button(sf::Sprite spr, GameDataRef _data, void(T::*onclick)(), T *t) : _sprite(spr), data(_data), onClick(onclick), _t(t) {
 
 }
 
-void Button::Update() {
+template <class T>
+void Button<T>::Update() {
 
 	if (!data->inputManager.IsSpriteClicked(_sprite, sf::Mouse::Left)) {
 		WasClicked = false;
@@ -12,23 +14,26 @@ void Button::Update() {
 	}
 
 	if (!WasClicked) {
-		(*onClick)(_creator);
+		((*_t).*(onClick))();
 		WasClicked = true;
 	}
 
 }
 
-void Button::draw(sf::RenderTarget &target, sf::RenderStates states) const {
+template <class T>
+void Button<T>::draw(sf::RenderTarget &target, sf::RenderStates states) const {
 
 	target.draw(_sprite);
 
 }
 
-sf::Sprite *Button::GetSprite() {
+template <class T>
+sf::Sprite *Button<T>::GetSprite() {
 	return &_sprite;
 }
 
-void Button::CenterX() {
+template <class T>
+void Button<T>::CenterX() {
 
 	unsigned int x = data->window.getSize().x;
 	x /= 2;
@@ -39,7 +44,8 @@ void Button::CenterX() {
 
 }
 
-void Button::CenterY() {
+template <class T>
+void Button<T>::CenterY() {
 
 	unsigned int y = data->window.getSize().y;
 	y /= 2;
@@ -50,7 +56,8 @@ void Button::CenterY() {
 
 }
 
-void Button::Center() {
+template <class T>
+void Button<T>::Center() {
 	CenterX();
 	CenterY();
 }

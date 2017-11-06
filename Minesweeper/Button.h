@@ -3,9 +3,11 @@
 #include <SFML\Graphics.hpp>
 #include "Game.h"
 
+
+template <class T>
 class Button : public sf::Drawable {
 public:
-	Button(sf::Sprite, GameDataRef data, void(*onclick)(void *creator), void *creator);
+	Button(sf::Sprite, GameDataRef data, void(T::*onclick)(), T *t);
 
 	void Update();
 
@@ -17,10 +19,11 @@ public:
 
 private:
 	virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const;
+	T *_t;
 
 	sf::Sprite _sprite;
 	void *_creator;
-	void(*onClick)(void*);
+	void(T::*onClick)();
 
 	bool WasClicked = false;
 
