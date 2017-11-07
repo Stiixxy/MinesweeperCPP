@@ -26,9 +26,9 @@
 
 #pragma region Minesweeper settings
 
-#define DEFAULT_GRID_WIDTH	20
-#define DEFAULT_GRID_HEIGHT	20
-#define DEFAULT_GRID_BOMBS	1
+#define DEFAULT_GRID_WIDTH	30
+#define DEFAULT_GRID_HEIGHT	30
+#define DEFAULT_GRID_BOMBS	60
 #define DEFAULT_SAVE_PATH	"Resources/save.txt"
 #define GRID_Y_PERCENTAGE	 0.85
 

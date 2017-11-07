@@ -14,6 +14,7 @@ TODO:
 void MainState::Init() {
 	_data->assetManager.LoadTexture("Minesweeper spritesheet", TILE_SPRITESHEET);
 	_data->assetManager.LoadTexture("Minesweeper numbers", NUMBERS_SPRITESHEET);
+	_data->assetManager.LoadTexture("button image", "Resources/buttonRed.png");
 	saver = new EventSaver();
 
 	if (loadSave.empty()) {
@@ -29,8 +30,15 @@ void MainState::Init() {
 	map = new TileMap();
 	map->setTexture(&_data->assetManager.GetTexture("Minesweeper spritesheet"));
 	UpdateMap();
-	gui = new MainStateGui(&points, &playTime,  &_data->assetManager.GetTexture("Minesweeper numbers"));
-	
+	gui = new MainStateGui(&points, &playTime, &_data->assetManager.GetTexture("Minesweeper numbers"));
+
+	//Init save button
+	saveButton = new Button<MainState>(sf::Sprite(_data->assetManager.GetTexture("button image")), _data, &MainState::OnSaveClick, this);
+	saveButton->GetSprite()->setScale(.3, .3);
+	saveButton->CenterX();
+	saveButton->GetSprite()->move(0, _data->window.getSize().y * (1-GRID_Y_PERCENTAGE) / 2 - saveButton->GetSprite()->getGlobalBounds().height / 2);
+	saveButton->GetSprite()->setColor(sf::Color::Green);
+
 }
 
 void MainState::BeforeDestroy() {
@@ -39,9 +47,9 @@ void MainState::BeforeDestroy() {
 }
 
 void MainState::Update(float dt) {
-	_data->window.setView(gridView);
 	PollEvents(dt);
 	if (!_data->window.hasFocus()) return;
+	_data->window.setView(gridView);
 	HandleInput(dt);
 	gui->Update();
 
@@ -76,6 +84,13 @@ void MainState::Update(float dt) {
 	}
 
 	points += grid->GetAndClearPoints();
+
+	saveButton->Update();
+	if (saver->IsUpToDate()) {
+		saveButton->GetSprite()->setColor(sf::Color::Green);
+	} else {
+		saveButton->GetSprite()->setColor(sf::Color::Red);
+	}
 }
 
 void MainState::UpdateMap() {
@@ -86,6 +101,8 @@ void MainState::Draw() {
 	_data->window.setView(gridView);
 	_data->window.draw(*map);
 	_data->window.draw(*gui);
+	_data->window.setView(_data->window.getDefaultView());
+	_data->window.draw(*saveButton);
 }
 
 void MainState::PollEvents(float dt) {
@@ -135,6 +152,7 @@ void MainState::HandleInput(float dt) {
 	static bool rWasPressed = false;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::R)) {
 		if (!rWasPressed) {
+			rWasPressed = true;
 			if (!grid->HasWon()) {
 				points = 0;
 				playTime = 0;
@@ -144,7 +162,6 @@ void MainState::HandleInput(float dt) {
 			grid->RandomiseBombs(newBombCount);
 			_alive = true;
 			UpdateMap();
-			rWasPressed = true;
 		}
 	} else {
 		rWasPressed = false;
@@ -198,4 +215,11 @@ bool MainState::LoadFromFile(std::string fileName) {
 	newBombCount = bombsCreated;
 
 	saver->Resume();
+}
+
+void MainState::OnSaveClick() {
+	if (saver->IsUpToDate())return;
+	if (saver->SaveEventsToFile(DEFAULT_SAVE_PATH)) {
+		printf("Succesfully saved game\n");
+	}
 }
