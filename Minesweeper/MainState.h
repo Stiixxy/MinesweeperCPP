@@ -11,6 +11,7 @@
 class MainState : public State {
 public:
 	MainState(GameDataRef data, sf::Vector2i gridsize) : _data(data), newGridSize(gridsize) {}
+	MainState(GameDataRef data, std::string save) : _data(data), loadSave(save) {}
 
 	virtual void Init();
 	virtual void BeforeDestroy(); //For cleanup
@@ -38,5 +39,6 @@ private:
 	bool _alive = true;
 	int points = 0;
 
+	std::string loadSave;
 	sf::Vector2i newGridSize;
 };

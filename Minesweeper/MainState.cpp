@@ -9,17 +9,19 @@ void MainState::Init() {
 	_data->assetManager.LoadTexture("Minesweeper numbers", NUMBERS_SPRITESHEET);
 	saver = new EventSaver();
 
-	grid = new Grid(newGridSize.x, newGridSize.y, saver);
-	grid->RandomiseBombs(DEFAULT_GRID_BOMBS);
-
-	map = new TileMap();
-
-	map->setTexture(&_data->assetManager.GetTexture("Minesweeper spritesheet"));
-	UpdateMap();
+	if (loadSave.empty()) {
+		grid = new Grid(newGridSize.x, newGridSize.y, saver);
+		grid->RandomiseBombs(DEFAULT_GRID_BOMBS);
+	} else {
+		LoadFromFile(loadSave);
+	}
 
 	gridView = sf::View(sf::FloatRect(0, 0, grid->GetSize().x * SPRITE_WIDTH, grid->GetSize().y * SPRITE_HEIGHT));
 	gridView.setViewport(sf::FloatRect(0, 1 - GRID_Y_PERCENTAGE, 1, GRID_Y_PERCENTAGE));
 
+	map = new TileMap();
+	map->setTexture(&_data->assetManager.GetTexture("Minesweeper spritesheet"));
+	UpdateMap();
 	gui = new MainStateGui(&points, &playTime,  &_data->assetManager.GetTexture("Minesweeper numbers"));
 	
 }

@@ -20,11 +20,13 @@ public:
 	void PollEvents(float dt);
 
 	void OnPlayClick();
+	void OnLoadClick();
 	void OnExitClick();
 private:
 	GameDataRef _data;
 	
 	Button<MainMenuState> *playButton;
+	Button<MainMenuState> *loadButton;
 	Button<MainMenuState> *exitButton;
 
 };
