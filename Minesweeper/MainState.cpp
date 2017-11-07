@@ -184,5 +184,7 @@ bool MainState::LoadFromFile(std::string fileName) {
 		points += grid->GetAndClearPoints();
 	}
 
+	if (grid->HasWon()) grid->ShowBombs();
+
 	saver->Resume();
 }
