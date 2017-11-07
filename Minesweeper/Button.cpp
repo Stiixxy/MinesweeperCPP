@@ -103,7 +103,7 @@ void Button<T>::AutoSetFontSize(float percent) {
 }
 
 template <class T>
-bool Button<T>::TextFits(float percent) {
+bool Button<T>::TextFits(float percent = 1) {
 	if (_text.getGlobalBounds().width > _sprite.getGlobalBounds().width * percent)return false;// width is bigger then allowed
 	if (_text.getGlobalBounds().height > _sprite.getGlobalBounds().height * percent)return false;
 	return true;

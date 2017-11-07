@@ -5,11 +5,11 @@ void MainMenuState::Init() {
 	_data->assetManager.LoadFont("Buttonfont", "Resources/SOTA.ttf");
 
 	b = new Button<MainMenuState>(sf::Sprite(_data->assetManager.GetTexture("button")), _data, &MainMenuState::InMemberFunction, this);
-	b->GetSprite()->setScale(3, 3);
+	b->GetSprite()->setScale(5, 5);
 	b->Center();
 	b->InitText("Test wddqwdwqqwqwdith ", &_data->assetManager.GetFont("Buttonfont"));
 	//b->SetFontSize(100);
-	b->AutoSetFontSize(.9);
+	b->AutoSetFontSize();
 	b->CenterText();
 
 }

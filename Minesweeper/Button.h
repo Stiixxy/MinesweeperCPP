@@ -22,7 +22,7 @@ public:
 	void SetFont(sf::Font f);
 	void SetFontSize(int i);
 
-	void AutoSetFontSize(float percent);
+	void AutoSetFontSize(float percent = 1);
 	void CenterText();
 
 private:
