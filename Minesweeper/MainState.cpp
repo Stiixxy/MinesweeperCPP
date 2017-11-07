@@ -181,6 +181,7 @@ bool MainState::LoadFromFile(std::string fileName) {
 			grid->ClickTile(e.x, e.y);
 			break;
 		}
+		points += grid->GetAndClearPoints();
 	}
 
 	saver->Resume();
