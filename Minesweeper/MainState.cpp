@@ -4,6 +4,13 @@
 #include "Event.h"
 #include <iostream>
 
+/*
+
+TODO:
+	- Add a save button between the time and the points that is green when saver is up to date and red when current game isnt saved
+
+*/
+
 void MainState::Init() {
 	_data->assetManager.LoadTexture("Minesweeper spritesheet", TILE_SPRITESHEET);
 	_data->assetManager.LoadTexture("Minesweeper numbers", NUMBERS_SPRITESHEET);
