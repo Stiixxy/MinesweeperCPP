@@ -12,6 +12,7 @@ enum EVENT_TYPES {
 	TILE_CLICKED = 2,
 	BOMB_ADDED = 3,
 	FLAG_TOGGLED = 4,
+	TIME_ADDED = 5
 };
 
 class Event {

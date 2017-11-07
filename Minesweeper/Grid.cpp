@@ -114,6 +114,7 @@ sf::Vector2i Grid::MouseToGridPos(sf::Vector2f mousePos) {
 bool Grid::ToggleFlag(int x, int y) {
 	//Returns true if somthing changed
 	if (!IsInGrid(x, y)) return false;
+	if (m_clicked[GetIndex(x, y)] >= 0) return false;
 
 	if (m_clicked[GetIndex(x, y)] == TILE_TYPES::FLAGGED) {
 		m_clicked[GetIndex(x, y)] = TILE_TYPES::UNCLICKED;
