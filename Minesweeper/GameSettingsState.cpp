@@ -12,7 +12,6 @@ void GameSettingsState::Init() {
 	_data->assetManager.LoadFont("button font", "Resources/SOTA.ttf");
 
 	InitGUI();
-
 }
 
 void GameSettingsState::InitGUI() {
@@ -28,6 +27,11 @@ void GameSettingsState::InitGUI() {
 	gridSizeText.setColor(sf::Color::Red);
 	CenterText(gridSizeText, _data->window);
 	gridSizeText.move(0, _data->window.getSize().y * -.25);
+
+	gridText = sf::Text("Grid size:", _data->assetManager.GetFont("button font"));
+	gridText.setColor(sf::Color::Red);
+	CenterText(gridText, _data->window);
+	gridText.move(0, _data->window.getSize().y * -.25 - gridSizeText.getGlobalBounds().height);
 
 	heightUP = new Button<GameSettingsState>(sf::Sprite(_data->assetManager.GetTexture("button arrow up")), _data, &GameSettingsState::OnHeightUp, this);
 	heightUP->GetSprite()->setScale(.05, .05);
@@ -81,6 +85,7 @@ void GameSettingsState::Draw() {
 	_data->window.draw(*widthDOWN);
 
 	_data->window.draw(gridSizeText);
+	_data->window.draw(gridText);
 }
 
 void GameSettingsState::OnStartClick() {

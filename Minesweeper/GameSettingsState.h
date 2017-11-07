@@ -34,6 +34,7 @@ private:
 	GameDataRef _data;
 
 	sf::Text gridSizeText;
+	sf::Text gridText;
 	int gridWidth = DEFAULT_GRID_WIDTH, gridHeight = DEFAULT_GRID_HEIGHT;
 
 	Button<GameSettingsState> *heightUP;
