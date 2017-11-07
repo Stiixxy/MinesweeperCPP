@@ -1,5 +1,5 @@
 #include "MainMenuState.h"
-#include "MainState.h"
+#include "GameSettingsState.h"
 
 void MainMenuState::Init() {
 	_data->assetManager.LoadTexture("button image", "Resources/button.png");
@@ -44,7 +44,7 @@ void MainMenuState::Draw() {
 }
 
 void MainMenuState::OnPlayClick() {
-	_data->stateManager.AddState(StateRef(new MainState(_data)));
+	_data->stateManager.AddState(StateRef(new GameSettingsState(_data)));
 }
 
 void MainMenuState::OnExitClick() {

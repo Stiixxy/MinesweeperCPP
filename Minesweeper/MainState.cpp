@@ -9,7 +9,7 @@ void MainState::Init() {
 	_data->assetManager.LoadTexture("Minesweeper numbers", NUMBERS_SPRITESHEET);
 	saver = new EventSaver();
 
-	grid = new Grid(DEFAULT_GRID_WIDTH, DEFAULT_GRID_HEIGHT, saver);
+	grid = new Grid(newGridSize.x, newGridSize.y, saver);
 	grid->RandomiseBombs(DEFAULT_GRID_BOMBS);
 
 	map = new TileMap();
@@ -131,7 +131,7 @@ void MainState::HandleInput(float dt) {
 				playTime = 0;
 				saver->ClearEvents();
 			}
-			grid = new Grid(DEFAULT_GRID_WIDTH, DEFAULT_GRID_HEIGHT, saver);
+			grid = new Grid(newGridSize.x, newGridSize.y, saver);
 			grid->RandomiseBombs(DEFAULT_GRID_BOMBS);
 			_alive = true;
 			UpdateMap();
@@ -167,6 +167,7 @@ bool MainState::LoadFromFile(std::string fileName) {
 		switch (e.type) {
 		case EVENT_TYPES::GRID_CREATED:
 			grid = new Grid(e.x, e.y, saver);
+			//newGridSize = sf::Vector2i(e.x, e.y);
 			break;
 		case EVENT_TYPES::BOMB_ADDED:
 			grid->AddBomb(e.x, e.y);

@@ -28,6 +28,9 @@
     <Filter Include="Resource Files\GUI">
       <UniqueIdentifier>{1c1c09cb-83e2-4894-9bd8-d26222cc83a1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\Functions">
+      <UniqueIdentifier>{2722bc9c-c77e-45d1-a66b-101c56fe813e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -65,6 +68,12 @@
     </ClCompile>
     <ClCompile Include="MainMenuState.cpp">
       <Filter>Resource Files\States</Filter>
+    </ClCompile>
+    <ClCompile Include="GameSettingsState.cpp">
+      <Filter>Resource Files\States</Filter>
+    </ClCompile>
+    <ClCompile Include="GUIFunctions.cpp">
+      <Filter>Resource Files\Functions</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -109,6 +118,12 @@
     </ClInclude>
     <ClInclude Include="MainMenuState.h">
       <Filter>Resource Files\States</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSettingsState.h">
+      <Filter>Resource Files\States</Filter>
+    </ClInclude>
+    <ClInclude Include="GUIFunctions.h">
+      <Filter>Resource Files\Functions</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

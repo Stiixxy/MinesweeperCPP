@@ -10,7 +10,7 @@
 
 class MainState : public State {
 public:
-	MainState(GameDataRef data) : _data(data) {}
+	MainState(GameDataRef data, sf::Vector2i gridsize) : _data(data), newGridSize(gridsize) {}
 
 	virtual void Init();
 	virtual void BeforeDestroy(); //For cleanup
@@ -37,4 +37,6 @@ private:
 	bool _clickedLastFrame = true;
 	bool _alive = true;
 	int points = 0;
+
+	sf::Vector2i newGridSize;
 };
