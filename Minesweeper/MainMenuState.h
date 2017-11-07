@@ -18,9 +18,13 @@ public:
 	virtual void Draw();
 
 	void PollEvents(float dt);
-	void InMemberFunction();
+
+	void OnPlayClick();
+	void OnExitClick();
 private:
 	GameDataRef _data;
+	
+	Button<MainMenuState> *playButton;
+	Button<MainMenuState> *exitButton;
 
-	Button<MainMenuState> *b;
 };

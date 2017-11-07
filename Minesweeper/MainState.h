@@ -34,7 +34,7 @@ private:
 
 	sf::View gridView;
 
-	bool _clickedLastFrame = false;
+	bool _clickedLastFrame = true;
 	bool _alive = true;
 	int points = 0;
 };

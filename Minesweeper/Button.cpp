@@ -115,8 +115,9 @@ void Button<T>::CenterText() {
 	float x = _sprite.getGlobalBounds().width / 2 + _sprite.getPosition().x;
 	x -= _text.getGlobalBounds().width / 2;
 
-	float y = _sprite.getGlobalBounds().height / 2 + _sprite.getPosition().y;
+	float y = _sprite.getGlobalBounds().height / 2 +_sprite.getPosition().y;
 	y -= _text.getGlobalBounds().height / 2;
+	y -= _text.getGlobalBounds().height / 4; //For the text offset from the top
 
 	_text.setPosition(x, y);
 
