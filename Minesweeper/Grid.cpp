@@ -63,7 +63,7 @@ int Grid::ClickTile(int x, int y) {
 }
 
 int Grid::GetIndex(int x, int y) {
-	return x + (y * _size.y);
+	return x + (y * _size.x);
 }
 
 int Grid::GetBombs(int x, int y) {

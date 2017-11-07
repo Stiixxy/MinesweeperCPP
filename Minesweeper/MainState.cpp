@@ -167,7 +167,7 @@ bool MainState::LoadFromFile(std::string fileName) {
 		switch (e.type) {
 		case EVENT_TYPES::GRID_CREATED:
 			grid = new Grid(e.x, e.y, saver);
-			//newGridSize = sf::Vector2i(e.x, e.y);
+			newGridSize = sf::Vector2i(e.x, e.y);
 			break;
 		case EVENT_TYPES::BOMB_ADDED:
 			grid->AddBomb(e.x, e.y);
