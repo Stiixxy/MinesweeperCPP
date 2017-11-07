@@ -2,20 +2,27 @@
 
 void MainMenuState::Init() {
 	_data->assetManager.LoadTexture("button", "Resources/numbers.png");
+	_data->assetManager.LoadFont("Buttonfont", "Resources/SOTA.ttf");
 
 	b = new Button<MainMenuState>(sf::Sprite(_data->assetManager.GetTexture("button")), _data, &MainMenuState::InMemberFunction, this);
+	b->GetSprite()->setScale(3, 3);
 	b->Center();
+	b->InitText("Test wddqwdwqqwqwdith ", &_data->assetManager.GetFont("Buttonfont"));
+	//b->SetFontSize(100);
+	b->AutoSetFontSize(.9);
+	b->CenterText();
 
 }
 
-void MainMenuState::BeforeDestroy() {}
+void MainMenuState::BeforeDestroy() {
+
+}
 
 void MainMenuState::Update(float dt) {
 	b->Update();
 }
 
 void MainMenuState::Draw() {
-	if (temp)return;
 	_data->window.draw(*b);
 }
 

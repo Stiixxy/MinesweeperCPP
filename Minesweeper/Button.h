@@ -17,12 +17,23 @@ public:
 	void CenterY();
 	void Center();
 
+	void InitText(sf::String s, sf::Font *f, int = 30);
+	void SetText(sf::String s);
+	void SetFont(sf::Font f);
+	void SetFontSize(int i);
+
+	void AutoSetFontSize(float percent);
+	void CenterText();
+
 private:
 	virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const;
+	bool TextFits(float percent);
+
 	T *_t;
 
 	sf::Sprite _sprite;
-	void *_creator;
+	sf::Text _text;
+
 	void(T::*onClick)();
 
 	bool WasClicked = false;
