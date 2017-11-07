@@ -8,6 +8,9 @@ void MainMenuState::Init() {
 	playButton = new Button<MainMenuState>(sf::Sprite(_data->assetManager.GetTexture("button image")), _data, &MainMenuState::OnPlayClick, this);
 	exitButton = new Button<MainMenuState>(sf::Sprite(_data->assetManager.GetTexture("button image")), _data, &MainMenuState::OnExitClick, this);
 
+	playButton->GetSprite()->setScale(1.25, 1.25);
+	exitButton->GetSprite()->setScale(1.25, 1.25);
+
 	playButton->Center();
 	playButton->GetSprite()->move(0, _data->window.getSize().y * -.25);
 
