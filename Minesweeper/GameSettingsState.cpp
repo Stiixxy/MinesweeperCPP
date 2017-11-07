@@ -33,6 +33,10 @@ void GameSettingsState::InitGUI() {
 	CenterText(gridText, _data->window);
 	gridText.move(0, _data->window.getSize().y * -.25 - gridSizeText.getGlobalBounds().height);
 
+	bombCountText = sf::Text("Bombs: " + std::to_string(bombs), _data->assetManager.GetFont("button font"));
+	bombCountText.setColor(sf::Color::Red);
+	CenterText(bombCountText, _data->window);
+
 	heightUP = new Button<GameSettingsState>(sf::Sprite(_data->assetManager.GetTexture("button arrow up")), _data, &GameSettingsState::OnHeightUp, this);
 	heightUP->GetSprite()->setScale(.05, .05);
 	heightUP->Center();
@@ -57,6 +61,18 @@ void GameSettingsState::InitGUI() {
 	widthDOWN->GetSprite()->move(-gridSizeText.getGlobalBounds().width / 2 - widthDOWN->GetSprite()->getGlobalBounds().width, _data->window.getSize().y * -.25 + gridSizeText.getGlobalBounds().height / 2 - heightDOWN->GetSprite()->getGlobalBounds().height);
 	widthDOWN->GetSprite()->setColor(sf::Color::White);
 
+	bombsUP = new Button<GameSettingsState>(sf::Sprite(_data->assetManager.GetTexture("button arrow up")), _data, &GameSettingsState::OnBombsUp, this);
+	bombsUP->GetSprite()->setScale(.05, .05);
+	bombsUP->Center();
+	bombsUP->GetSprite()->move(-bombCountText.getGlobalBounds().width / 2 - bombsUP->GetSprite()->getGlobalBounds().width, -bombCountText.getGlobalBounds().height / 2);
+	bombsUP->GetSprite()->setColor(sf::Color::White);
+
+	bombsDOWN = new Button<GameSettingsState>(sf::Sprite(_data->assetManager.GetTexture("button arrow down")), _data, &GameSettingsState::OnBombsDown, this);
+	bombsDOWN->GetSprite()->setScale(.05, .05);
+	bombsDOWN->Center();
+	bombsDOWN->GetSprite()->move(-bombCountText.getGlobalBounds().width / 2 - bombsDOWN->GetSprite()->getGlobalBounds().width, bombsDOWN->GetSprite()->getGlobalBounds().height / 2);
+	bombsDOWN->GetSprite()->setColor(sf::Color::White);
+
 }
 
 void GameSettingsState::BeforeDestroy() {
@@ -71,11 +87,14 @@ void GameSettingsState::Update(float dt) {
 
 	widthUP->Update();
 	widthDOWN->Update();
+
+	bombsUP->Update();
+	bombsDOWN->Update();
 }
 
 void GameSettingsState::Draw() {
 	_data->window.setView(_data->window.getDefaultView());
-	
+
 	_data->window.draw(*startButton);
 
 	_data->window.draw(*heightUP);
@@ -84,12 +103,17 @@ void GameSettingsState::Draw() {
 	_data->window.draw(*widthUP);
 	_data->window.draw(*widthDOWN);
 
+	_data->window.draw(*bombsDOWN);
+	_data->window.draw(*bombsUP);
+
+	_data->window.draw(bombCountText);
+
 	_data->window.draw(gridSizeText);
 	_data->window.draw(gridText);
 }
 
 void GameSettingsState::OnStartClick() {
-	_data->stateManager.AddState(StateRef(new MainState(_data, sf::Vector2i(gridWidth, gridHeight))));
+	_data->stateManager.AddState(StateRef(new MainState(_data, sf::Vector2i(gridWidth, gridHeight), bombs)));
 }
 
 void GameSettingsState::OnHeightUp() {
@@ -110,6 +134,35 @@ void GameSettingsState::OnWidthUp() {
 void GameSettingsState::OnWidthDown() {
 	gridWidth--;
 	gridSizeText.setString(std::to_string(gridWidth) + ":" + std::to_string(gridHeight));
+}
+
+void GameSettingsState::OnBombsUp() {
+	bombs++;
+	bombCountText.setString("Bombs: " + std::to_string(bombs));
+
+	if ((bombs % 10) != 0) return;
+
+	/*
+	bombsUP->Center();
+	bombsUP->GetSprite()->move(bombCountText.getGlobalBounds().width / 2 + bombsUP->GetSprite()->getGlobalBounds().width * 2, -bombCountText.getGlobalBounds().height / 2);
+
+	bombsDOWN->Center();
+	bombsDOWN->GetSprite()->move(bombCountText.getGlobalBounds().width / 2 + bombsDOWN->GetSprite()->getGlobalBounds().width * 2, bombsDOWN->GetSprite()->getGlobalBounds().height / 2);
+	*/
+}
+
+void GameSettingsState::OnBombsDown() {
+	bombs--;
+	bombCountText.setString("Bombs: " + std::to_string(bombs));
+
+	if ((bombs % 10) != 0) return;
+	/*
+	bombsUP->Center();
+	bombsUP->GetSprite()->move(bombCountText.getGlobalBounds().width / 2 + bombsUP->GetSprite()->getGlobalBounds().width * 2, -bombCountText.getGlobalBounds().height / 2);
+
+	bombsDOWN->Center();
+	bombsDOWN->GetSprite()->move(bombCountText.getGlobalBounds().width / 2 + bombsDOWN->GetSprite()->getGlobalBounds().width * 2, bombsDOWN->GetSprite()->getGlobalBounds().height / 2);
+	*/
 }
 
 void GameSettingsState::PollEvents(float dt) {

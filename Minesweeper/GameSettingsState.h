@@ -30,18 +30,28 @@ public:
 	void OnWidthUp();
 	void OnWidthDown();
 
+	void OnBombsUp();
+	void OnBombsDown();
+
 private:
 	GameDataRef _data;
 
-	sf::Text gridSizeText;
 	sf::Text gridText;
+
+	sf::Text gridSizeText;
+	sf::Text bombCountText;
+
 	int gridWidth = DEFAULT_GRID_WIDTH, gridHeight = DEFAULT_GRID_HEIGHT;
+	int bombs = DEFAULT_GRID_BOMBS;
 
 	Button<GameSettingsState> *heightUP;
 	Button<GameSettingsState> *heightDOWN;
 
 	Button<GameSettingsState> *widthUP;
 	Button<GameSettingsState> *widthDOWN;
+	
+	Button<GameSettingsState> *bombsUP;
+	Button<GameSettingsState> *bombsDOWN;
 
 	Button<GameSettingsState> *startButton;
 

@@ -11,7 +11,7 @@ void MainState::Init() {
 
 	if (loadSave.empty()) {
 		grid = new Grid(newGridSize.x, newGridSize.y, saver);
-		grid->RandomiseBombs(DEFAULT_GRID_BOMBS);
+		grid->RandomiseBombs(newBombCount);
 	} else {
 		LoadFromFile(loadSave);
 	}
@@ -134,7 +134,7 @@ void MainState::HandleInput(float dt) {
 				saver->ClearEvents();
 			}
 			grid = new Grid(newGridSize.x, newGridSize.y, saver);
-			grid->RandomiseBombs(DEFAULT_GRID_BOMBS);
+			grid->RandomiseBombs(newBombCount);
 			_alive = true;
 			UpdateMap();
 			rWasPressed = true;
@@ -165,14 +165,17 @@ bool MainState::LoadFromFile(std::string fileName) {
 	saver->Pause();
 
 	Event e;
+	int bombsCreated = 0;
 	while (saver->GetNextEvent(e)) {
 		switch (e.type) {
 		case EVENT_TYPES::GRID_CREATED:
 			grid = new Grid(e.x, e.y, saver);
 			newGridSize = sf::Vector2i(e.x, e.y);
+			bombsCreated = 0;
 			break;
 		case EVENT_TYPES::BOMB_ADDED:
 			grid->AddBomb(e.x, e.y);
+			bombsCreated++;
 			break;
 		case EVENT_TYPES::FLAG_TOGGLED:
 			grid->ToggleFlag(e.x, e.y);
@@ -185,6 +188,7 @@ bool MainState::LoadFromFile(std::string fileName) {
 	}
 
 	if (grid->HasWon()) grid->ShowBombs();
+	newBombCount = bombsCreated;
 
 	saver->Resume();
 }

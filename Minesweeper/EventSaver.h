@@ -17,6 +17,7 @@ public:
 	bool SaveEventsToFile(std::string fileName);
 	int GetEventCounter();
 	void SetEventCounter(int);
+	bool IsUpToDate();
 
 	bool GetNextEvent(Event &event);
 	std::vector<Event> GetAllEvents();
@@ -29,4 +30,5 @@ private:
 	std::vector<Event> events;
 	int eventCounter = 0;
 	bool _paused = false;
+	bool _upToDate = true;
 };

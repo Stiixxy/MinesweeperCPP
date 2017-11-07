@@ -10,7 +10,7 @@
 
 class MainState : public State {
 public:
-	MainState(GameDataRef data, sf::Vector2i gridsize) : _data(data), newGridSize(gridsize) {}
+	MainState(GameDataRef data, sf::Vector2i gridsize, int bombCount) : _data(data), newGridSize(gridsize), newBombCount(bombCount) {}
 	MainState(GameDataRef data, std::string save) : _data(data), loadSave(save) {}
 
 	virtual void Init();
@@ -41,4 +41,5 @@ private:
 
 	std::string loadSave;
 	sf::Vector2i newGridSize;
+	int newBombCount;
 };

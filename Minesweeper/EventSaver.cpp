@@ -18,10 +18,12 @@ bool EventSaver::LoadEventsFromFile(std::string fileName) {
 		events.push_back(e);
 	}
 	dataStream.close();
+	_upToDate = true;
 	return true;
 }
 
 bool EventSaver::SaveEventsToFile(std::string fileName) {
+	if (_upToDate) return false;
 	dataStream = std::fstream(fileName, std::ios::out | std::ios::binary);
 
 	std::string line;
@@ -35,6 +37,7 @@ bool EventSaver::SaveEventsToFile(std::string fileName) {
 		dataStream << line << '\n';
 	}
 	dataStream.close();
+	_upToDate = true;
 	return true;
 }
 
@@ -58,6 +61,7 @@ std::vector<Event> EventSaver::GetAllEvents() {
 
 void EventSaver::AddEvent(Event event) {
 	if (_paused) return;
+	_upToDate = false;
 	events.push_back(event);
 }
 
@@ -71,4 +75,8 @@ void EventSaver::Resume() {
 
 void EventSaver::ClearEvents() {
 	events.clear();
+}
+
+bool EventSaver::IsUpToDate() {
+	return _upToDate;
 }
