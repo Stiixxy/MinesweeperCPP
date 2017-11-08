@@ -46,6 +46,9 @@ private:
 
 	Button<MainState> *saveButton;
 
+	sf::Sound bombSound;
+	sf::Sound applauseSound;
+
 	std::string loadSave;
 	sf::Vector2i newGridSize;
 	int newBombCount;
