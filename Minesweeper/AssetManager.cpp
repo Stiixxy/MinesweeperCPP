@@ -24,6 +24,16 @@ void AssetManager::LoadFont(std::string name, std::string fileName) {
 
 }
 
+void AssetManager::LoadSound(std::string name, std::string filename) {
+
+	sf::SoundBuffer buffer;
+
+	if (buffer.loadFromFile(filename)) {
+		_sounds[name] = buffer;
+	}
+
+}
+
 void AssetManager::SetGlobal(std::string name, void *global) {
 	_globals[name] = global;
 }
@@ -34,6 +44,10 @@ void AssetManager::UnloadTexture(std::string name) {
 
 void AssetManager::UnloadFont(std::string name) {
 	_fonts.erase(name);
+}
+
+void AssetManager::UnloadSound(std::string name) {
+	_sounds.erase(name);
 }
 
 sf::Texture &AssetManager::GetTexture(std::string name) {
@@ -48,6 +62,10 @@ sf::Font &AssetManager::GetFont(std::string name) {
 
 	return this->_fonts.at(name);
 
+}
+
+sf::SoundBuffer &AssetManager::GetSound(std::string name) {
+	return _sounds.at(name);
 }
 
 void* AssetManager::GetGlobal(std::string name) {
