@@ -75,6 +75,9 @@
     <ClCompile Include="GUIFunctions.cpp">
       <Filter>Resource Files\Functions</Filter>
     </ClCompile>
+    <ClCompile Include="SplashState.cpp">
+      <Filter>Resource Files\States</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -124,6 +127,9 @@
     </ClInclude>
     <ClInclude Include="GUIFunctions.h">
       <Filter>Resource Files\Functions</Filter>
+    </ClInclude>
+    <ClInclude Include="SplashState.h">
+      <Filter>Resource Files\States</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -162,6 +162,7 @@
     <ClCompile Include="MainMenuState.cpp" />
     <ClCompile Include="MainState.cpp" />
     <ClCompile Include="MainStateGui.cpp" />
+    <ClCompile Include="SplashState.cpp" />
     <ClCompile Include="StateManager.cpp" />
     <ClCompile Include="TileMap.cpp" />
   </ItemGroup>
@@ -179,6 +180,7 @@
     <ClInclude Include="MainMenuState.h" />
     <ClInclude Include="MainState.h" />
     <ClInclude Include="MainStateGui.h" />
+    <ClInclude Include="SplashState.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="StateManager.h" />
     <ClInclude Include="TileMap.h" />
