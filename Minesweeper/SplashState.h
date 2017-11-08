@@ -5,7 +5,7 @@
 
 #include <SFML\Graphics.hpp>
 
-#define splashTime 3
+#define splashTime 0.5
 
 class SplashState : public State {
 public:

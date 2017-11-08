@@ -1,4 +1,5 @@
 #include "GameSettingsState.h"
+#include "MainMenuState.h"
 #include "GUIFunctions.h"
 
 #include <iostream>
@@ -16,12 +17,18 @@ void GameSettingsState::Init() {
 
 void GameSettingsState::InitGUI() {
 	startButton = new Button<GameSettingsState>(sf::Sprite(_data->assetManager.GetTexture("button image")), _data, &GameSettingsState::OnStartClick, this);
-	startButton->GetSprite()->setScale(1.25, 1.25);
 	startButton->Center();
-	startButton->GetSprite()->move(0, _data->window.getSize().y * .25);
+	startButton->GetSprite()->move(0, _data->window.getSize().y * .125);
 	startButton->InitText("Start game", &_data->assetManager.GetFont("button font"));
 	startButton->AutoSetFontSize(.8);
 	startButton->CenterText();
+
+	backButton = new Button<GameSettingsState>(sf::Sprite(_data->assetManager.GetTexture("button image")), _data, &GameSettingsState::OnBackClick, this);
+	backButton->Center();
+	backButton->GetSprite()->move(0, _data->window.getSize().y * .25 + backButton->GetSprite()->getGlobalBounds().height / 2);
+	backButton->InitText("Back", &_data->assetManager.GetFont("button font"));
+	backButton->AutoSetFontSize(.8);
+	backButton->CenterText();
 
 	gridSizeText = sf::Text(std::to_string(gridWidth) + ":" + std::to_string(gridHeight), _data->assetManager.GetFont("button font"));
 	gridSizeText.setColor(sf::Color::Red);
@@ -81,6 +88,7 @@ void GameSettingsState::BeforeDestroy() {
 
 void GameSettingsState::Update(float dt) {
 	startButton->Update();
+	backButton->Update();
 
 	heightUP->Update();
 	heightDOWN->Update();
@@ -96,6 +104,7 @@ void GameSettingsState::Draw() {
 	_data->window.setView(_data->window.getDefaultView());
 
 	_data->window.draw(*startButton);
+	_data->window.draw(*backButton);
 
 	_data->window.draw(*heightUP);
 	_data->window.draw(*heightDOWN);
@@ -114,6 +123,10 @@ void GameSettingsState::Draw() {
 
 void GameSettingsState::OnStartClick() {
 	_data->stateManager.AddState(StateRef(new MainState(_data, sf::Vector2i(gridWidth, gridHeight), bombs)));
+}
+
+void GameSettingsState::OnBackClick() {
+	_data->stateManager.AddState(StateRef(new MainMenuState(_data)));
 }
 
 void GameSettingsState::OnHeightUp() {
