@@ -39,7 +39,7 @@ void MainState::Init() {
 	applauseSound = sf::Sound(_data->assetManager.GetSound("applause"));
 
 	//Connect to network
-	if (_port == -1) {
+	if (_port != -1) {
 		if (_ip == sf::IpAddress::None) {
 			//Host
 			saver->Host(_port);
