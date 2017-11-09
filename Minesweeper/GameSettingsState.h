@@ -23,6 +23,8 @@ public:
 	void PollEvents(float dt);
 
 	void OnStartClick();
+	void OnMultiplayerClick();
+	void OnBackClick();
 
 	void OnHeightUp();
 	void OnHeightDown();
@@ -54,5 +56,7 @@ private:
 	Button<GameSettingsState> *bombsDOWN;
 
 	Button<GameSettingsState> *startButton;
+	Button<GameSettingsState> *backButton;
+	Button<GameSettingsState> *multiplayerButton;
 
 };

@@ -4,17 +4,12 @@
 #include "Event.h"
 #include <iostream>
 
-/*
-
-TODO:
-	- Add a save button between the time and the points that is green when saver is up to date and red when current game isnt saved
-
-*/
-
 void MainState::Init() {
 	_data->assetManager.LoadTexture("Minesweeper spritesheet", TILE_SPRITESHEET);
 	_data->assetManager.LoadTexture("Minesweeper numbers", NUMBERS_SPRITESHEET);
 	_data->assetManager.LoadTexture("button image", "Resources/buttonRed.png");
+	_data->assetManager.LoadSound("bomb", "Resources/Bomb.wav");
+	_data->assetManager.LoadSound("applause", "Resources/applause.wav");
 	saver = new EventSaver();
 
 	if (loadSave.empty()) {
@@ -36,9 +31,12 @@ void MainState::Init() {
 	saveButton = new Button<MainState>(sf::Sprite(_data->assetManager.GetTexture("button image")), _data, &MainState::OnSaveClick, this);
 	saveButton->GetSprite()->setScale(.3, .3);
 	saveButton->CenterX();
-	saveButton->GetSprite()->move(0, _data->window.getSize().y * (1-GRID_Y_PERCENTAGE) / 2 - saveButton->GetSprite()->getGlobalBounds().height / 2);
+	saveButton->GetSprite()->move(0, _data->window.getSize().y * (1 - GRID_Y_PERCENTAGE) / 2 - saveButton->GetSprite()->getGlobalBounds().height / 2);
 	saveButton->GetSprite()->setColor(sf::Color::Green);
 
+	//Create sound file
+	bombSound = sf::Sound(_data->assetManager.GetSound("bomb"));
+	applauseSound = sf::Sound(_data->assetManager.GetSound("applause"));
 }
 
 void MainState::BeforeDestroy() {
@@ -61,11 +59,16 @@ void MainState::Update(float dt) {
 			sf::Vector2i tilePos = grid->MouseToGridPos(worldPos);
 			int result = grid->ClickTile(tilePos.x, tilePos.y);
 
-			if (grid->HasWon())
+			if (grid->HasWon()) {
 				grid->ShowBombs();
+				applauseSound.play();
+			}
 
 			if (result != TILE_RETURNS::ALREAD_CLICKED) UpdateMap();
-			if (result == TILE_RETURNS::BOMB) _alive = false;
+			if (result == TILE_RETURNS::BOMB) {
+				_alive = false;
+				bombSound.play();
+			}
 		}
 	} else if (sf::Mouse::isButtonPressed(sf::Mouse::Right) && _alive && !grid->HasWon()) {
 		if (!_clickedLastFrame) {

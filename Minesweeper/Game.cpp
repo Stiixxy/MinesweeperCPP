@@ -2,13 +2,13 @@
 
 #include <stdlib.h>
 #include <time.h>
-#include "MainMenuState.h"
+#include "SplashState.h"
 
 Game::Game() {
 	srand(time(NULL));
 
 	_data->window.create(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), WINDOW_TITLE, sf::Style::Close | sf::Style::Titlebar);
-	_data->stateManager.AddState(StateRef(new MainMenuState(this->_data)));
+	_data->stateManager.AddState(StateRef(new SplashState(this->_data)));
 	_data->inputManager.SetRenderWindow(&_data->window);
 
 	this->Run();

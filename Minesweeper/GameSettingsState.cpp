@@ -1,9 +1,16 @@
 #include "GameSettingsState.h"
+#include "MainMenuState.h"
+#include "NetworkingTestState.h"
 #include "GUIFunctions.h"
 
 #include <iostream>
 #include <ctime>
 #include <thread>
+
+/*
+TODO:
+	-implement multiplayer state and multiplayer host in mainstate
+*/
 
 void GameSettingsState::Init() {
 	_data->assetManager.LoadTexture("button image", "Resources/button.png");
@@ -16,12 +23,25 @@ void GameSettingsState::Init() {
 
 void GameSettingsState::InitGUI() {
 	startButton = new Button<GameSettingsState>(sf::Sprite(_data->assetManager.GetTexture("button image")), _data, &GameSettingsState::OnStartClick, this);
-	startButton->GetSprite()->setScale(1.25, 1.25);
 	startButton->Center();
-	startButton->GetSprite()->move(0, _data->window.getSize().y * .25);
-	startButton->InitText("Start game", &_data->assetManager.GetFont("button font"));
+	startButton->GetSprite()->move(0, _data->window.getSize().y * .125);
+	startButton->InitText("Start new game", &_data->assetManager.GetFont("button font"));
 	startButton->AutoSetFontSize(.8);
 	startButton->CenterText();
+
+	multiplayerButton = new Button<GameSettingsState>(sf::Sprite(_data->assetManager.GetTexture("button image")), _data, &GameSettingsState::OnMultiplayerClick, this);
+	multiplayerButton->Center();
+	multiplayerButton->GetSprite()->move(0, _data->window.getSize().y * .25 + multiplayerButton->GetSprite()->getGlobalBounds().height * .25);
+	multiplayerButton->InitText("Multiplayer", &_data->assetManager.GetFont("button font"));
+	multiplayerButton->AutoSetFontSize(.8);
+	multiplayerButton->CenterText();
+
+	backButton = new Button<GameSettingsState>(sf::Sprite(_data->assetManager.GetTexture("button image")), _data, &GameSettingsState::OnBackClick, this);
+	backButton->Center();
+	backButton->GetSprite()->move(0, _data->window.getSize().y * .25 + backButton->GetSprite()->getGlobalBounds().height * 1.5);
+	backButton->InitText("Back", &_data->assetManager.GetFont("button font"));
+	backButton->AutoSetFontSize(.8);
+	backButton->CenterText();
 
 	gridSizeText = sf::Text(std::to_string(gridWidth) + ":" + std::to_string(gridHeight), _data->assetManager.GetFont("button font"));
 	gridSizeText.setColor(sf::Color::Red);
@@ -81,6 +101,8 @@ void GameSettingsState::BeforeDestroy() {
 
 void GameSettingsState::Update(float dt) {
 	startButton->Update();
+	multiplayerButton->Update();
+	backButton->Update();
 
 	heightUP->Update();
 	heightDOWN->Update();
@@ -96,6 +118,8 @@ void GameSettingsState::Draw() {
 	_data->window.setView(_data->window.getDefaultView());
 
 	_data->window.draw(*startButton);
+	_data->window.draw(*multiplayerButton);
+	_data->window.draw(*backButton);
 
 	_data->window.draw(*heightUP);
 	_data->window.draw(*heightDOWN);
@@ -114,6 +138,14 @@ void GameSettingsState::Draw() {
 
 void GameSettingsState::OnStartClick() {
 	_data->stateManager.AddState(StateRef(new MainState(_data, sf::Vector2i(gridWidth, gridHeight), bombs)));
+}
+
+void GameSettingsState::OnMultiplayerClick() {
+	_data->stateManager.AddState(StateRef(new NetworkingTestState(_data)));
+}
+
+void GameSettingsState::OnBackClick() {
+	_data->stateManager.AddState(StateRef(new MainMenuState(_data)));
 }
 
 void GameSettingsState::OnHeightUp() {
