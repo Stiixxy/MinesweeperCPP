@@ -46,6 +46,12 @@ void MainState::BeforeDestroy() {
 
 void MainState::Update(float dt) {
 	PollEvents(dt);
+	Event e;
+	while (saver->receivedEvents.size() > 0) {
+		e = saver->receivedEvents.front();
+		saver->receivedEvents.pop();
+		ExecuteEvent(e);
+	}
 	if (!_data->window.hasFocus()) return;
 	_data->window.setView(gridView);
 	HandleInput(dt);
@@ -76,7 +82,8 @@ void MainState::Update(float dt) {
 			sf::Vector2i mousePos = _data->inputManager.GetMousePosition();
 			sf::Vector2f worldPos = _data->window.mapPixelToCoords(mousePos);
 			sf::Vector2i tilePos = grid->MouseToGridPos(worldPos);
-			if (grid->ToggleFlag(tilePos.x, tilePos.y)) UpdateMap();
+			if (grid->ToggleFlag(tilePos.x, tilePos.y)) 
+				UpdateMap();
 		}
 	} else {
 		_clickedLastFrame = false;
@@ -87,6 +94,10 @@ void MainState::Update(float dt) {
 	}
 
 	points += grid->GetAndClearPoints();
+
+	while (saver->GetNextEvent(e)) {
+		saver->unsentEvents.push(e);
+	}
 
 	saveButton->Update();
 	if (saver->IsUpToDate()) {
@@ -185,6 +196,18 @@ void MainState::HandleInput(float dt) {
 		}
 	}
 
+	//Networking
+	static bool hasStartedNet = false;
+	if (hasStartedNet) return;
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::B)) {
+		saver->Host(5000);
+		hasStartedNet = true;
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::N)) {
+		saver->Connect("127.0.0.1", 5000);
+		hasStartedNet = true;
+	}
+	
 }
 
 bool MainState::LoadFromFile(std::string fileName) {
@@ -211,12 +234,37 @@ bool MainState::LoadFromFile(std::string fileName) {
 			grid->ClickTile(e.x, e.y);
 			break;
 		}
+		ExecuteEvent(e);
 		points += grid->GetAndClearPoints();
 	}
 
 	if (grid->HasWon()) grid->ShowBombs();
 	newBombCount = bombsCreated;
 
+	saver->Resume();
+}
+
+void MainState::ExecuteEvent(Event e) {
+	saver->Pause();
+
+	switch (e.type) {
+	case EVENT_TYPES::GRID_CREATED:
+		grid = new Grid(e.x, e.y, saver);
+		newGridSize = sf::Vector2i(e.x, e.y);
+		break;
+	case EVENT_TYPES::BOMB_ADDED:
+		grid->AddBomb(e.x, e.y);
+		break;
+	case EVENT_TYPES::FLAG_TOGGLED:
+		grid->ToggleFlag(e.x, e.y);
+		break;
+	case EVENT_TYPES::TILE_CLICKED:
+		grid->ClickTile(e.x, e.y);
+		break;
+	}
+
+	if (grid->HasWon()) grid->ShowBombs();
+	UpdateMap();
 	saver->Resume();
 }
 

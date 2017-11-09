@@ -75,8 +75,124 @@ void EventSaver::Resume() {
 
 void EventSaver::ClearEvents() {
 	events.clear();
+	eventCounter = 0;
 }
 
 bool EventSaver::IsUpToDate() {
 	return _upToDate;
+}
+
+void EventSaver::Host(int port) {
+
+	std::cout << "Starting server on " << port << ".\n";
+
+	_port = port;
+	sendThread = new sf::Thread(&EventSaver::HostSend, this);
+	sendThread->launch();
+
+}
+
+void EventSaver::Connect(sf::IpAddress host, int port) {
+
+	std::cout << "Connecting to host " << host << ":" << port << ".\n";
+
+	_host = host;
+	_port = port;
+
+	receiveThread = new sf::Thread(&EventSaver::ClientReceive, this);
+	receiveThread->launch();
+
+}
+
+void EventSaver::HostSend() {
+
+	host.listen(_port);
+	host.accept(client);
+
+	sf::Packet p;
+	std::string text = "Ping received";
+	p << text;
+
+	client.send(p);
+	client.receive(p);
+
+	p >> text;
+	std::cout << text << "\n";
+
+	receiveThread = new sf::Thread(&EventSaver::HostReceive, this);
+	receiveThread->launch();
+
+	while (1) {
+		while (unsentEvents.size() == 0) {
+			_sleep(1);
+		}
+		sf::Packet  sendPacket;
+		sendPacket << unsentEvents.front();
+		unsentEvents.pop();
+		client.send(sendPacket);
+	}
+
+}
+
+void EventSaver::ClientReceive() {
+	events.clear();
+	std::queue<Event> newQueue;
+	std::swap(unsentEvents, newQueue);
+	eventCounter = 0;
+
+	sf::IpAddress ip = sf::IpAddress(_host);
+	client.connect(ip, _port);
+
+	sf::Packet p;
+	client.receive(p);
+
+	std::string text;
+	p >> text;
+
+	std::cout << text << "\n";
+
+	text = "Pong received";
+	p = sf::Packet();
+	p << text;
+
+	client.send(p);
+
+	sendThread = new sf::Thread(&EventSaver::ClientSend, this);
+	sendThread->launch();
+
+	while (1) {
+		sf::Packet p;
+		client.receive(p);
+
+		Event e;
+		p >> e;
+
+		receivedEvents.push(e);
+		std::cout << e.type << ":" << e.x << ":" << e.y << "\n";
+	}
+}
+
+void EventSaver::HostReceive() {
+	while (1) {
+		sf::Packet p;
+		client.receive(p);
+
+		Event e;
+		p >> e;
+
+		receivedEvents.push(e);
+		std::cout << e.type << ":" << e.x << ":" << e.y << "\n";
+	}
+}
+
+void EventSaver::ClientSend() {
+	while (1) {
+		while (unsentEvents.size() == 0) {
+			_sleep(1);
+		}
+		sf::Packet  sendPacket;
+		sendPacket << unsentEvents.front();
+		unsentEvents.pop();
+		client.send(sendPacket);
+	}
 }

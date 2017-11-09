@@ -4,6 +4,7 @@
 #include <sstream>
 #include <vector>
 #include <iostream>
+#include <SFML\Network.hpp>
 
 enum EVENT_TYPES {
 	EVENT_UNKNOWN = -1,
@@ -47,3 +48,16 @@ public:
 	EVENT_TYPES type;
 	int x, y;
 };
+
+inline
+sf::Packet& operator <<(sf::Packet& packet, Event& e) {
+	return packet << e.type << e.x << e.y;
+}
+
+inline
+sf::Packet& operator >> (sf::Packet& packet, Event& e) {
+	int type;
+	packet >> type;
+	e.type = (EVENT_TYPES)type;
+	return packet >> e.x >> e.y;
+}

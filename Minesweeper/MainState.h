@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <queue>
 
 #include "State.h"
 #include "Game.h"
@@ -26,9 +27,12 @@ public:
 	void HandleInput(float dt);
 
 	void OnSaveClick();
+	void ExecuteEvent(Event e);
 
 	void UpdateMap();
 	bool LoadFromFile(std::string);
+
+	
 private:
 	MainStateGui *gui;
 	GameDataRef _data;
@@ -52,4 +56,7 @@ private:
 	std::string loadSave;
 	sf::Vector2i newGridSize;
 	int newBombCount;
+
+	
+
 };
