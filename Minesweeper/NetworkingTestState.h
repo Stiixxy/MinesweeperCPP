@@ -16,6 +16,8 @@ public:
 	virtual void Update(float dt);
 	virtual void Draw();
 
+	void AcceptConnection();
+
 private:
 	GameDataRef _data;
 	sf::TcpSocket socket;
