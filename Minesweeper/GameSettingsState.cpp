@@ -1,6 +1,7 @@
 #include "GameSettingsState.h"
 #include "MainMenuState.h"
 #include "ClientState.h"
+#include "HostState.h"
 #include "GUIFunctions.h"
 
 #include <iostream>
@@ -29,12 +30,21 @@ void GameSettingsState::InitGUI() {
 	startButton->AutoSetFontSize(.8);
 	startButton->CenterText();
 
-	multiplayerButton = new Button<GameSettingsState>(sf::Sprite(_data->assetManager.GetTexture("button image")), _data, &GameSettingsState::OnMultiplayerClick, this);
-	multiplayerButton->Center();
-	multiplayerButton->GetSprite()->move(0, _data->window.getSize().y * .25 + multiplayerButton->GetSprite()->getGlobalBounds().height * .25);
-	multiplayerButton->InitText("Multiplayer", &_data->assetManager.GetFont("button font"));
-	multiplayerButton->AutoSetFontSize(.8);
-	multiplayerButton->CenterText();
+	hostButton = new Button<GameSettingsState>(sf::Sprite(_data->assetManager.GetTexture("button image")), _data, &GameSettingsState::OnHostClick, this);
+	hostButton->GetSprite()->setScale(.5, 1);
+	hostButton->Center();
+	hostButton->GetSprite()->move(hostButton->GetSprite()->getGlobalBounds().width * -.5, _data->window.getSize().y * .25 + hostButton->GetSprite()->getGlobalBounds().height * .25);
+	hostButton->InitText("Host", &_data->assetManager.GetFont("button font"));
+	hostButton->AutoSetFontSize(.8);
+	hostButton->CenterText();
+
+	joinButton = new Button<GameSettingsState>(sf::Sprite(_data->assetManager.GetTexture("button image")), _data, &GameSettingsState::OnJoinClick, this);
+	joinButton->GetSprite()->setScale(.5, 1);
+	joinButton->Center();
+	joinButton->GetSprite()->move(joinButton->GetSprite()->getGlobalBounds().width * .5, _data->window.getSize().y * .25 + hostButton->GetSprite()->getGlobalBounds().height * .25);
+	joinButton->InitText("Join", &_data->assetManager.GetFont("button font"));
+	joinButton->AutoSetFontSize(.8);
+	joinButton->CenterText();
 
 	backButton = new Button<GameSettingsState>(sf::Sprite(_data->assetManager.GetTexture("button image")), _data, &GameSettingsState::OnBackClick, this);
 	backButton->Center();
@@ -101,8 +111,10 @@ void GameSettingsState::BeforeDestroy() {
 
 void GameSettingsState::Update(float dt) {
 	startButton->Update();
-	multiplayerButton->Update();
 	backButton->Update();
+
+	hostButton->Update();
+	joinButton->Update();
 
 	heightUP->Update();
 	heightDOWN->Update();
@@ -118,8 +130,10 @@ void GameSettingsState::Draw() {
 	_data->window.setView(_data->window.getDefaultView());
 
 	_data->window.draw(*startButton);
-	_data->window.draw(*multiplayerButton);
 	_data->window.draw(*backButton);
+
+	_data->window.draw(*hostButton);
+	_data->window.draw(*joinButton);
 
 	_data->window.draw(*heightUP);
 	_data->window.draw(*heightDOWN);
@@ -140,8 +154,12 @@ void GameSettingsState::OnStartClick() {
 	_data->stateManager.AddState(StateRef(new MainState(_data, sf::Vector2i(gridWidth, gridHeight), bombs)));
 }
 
-void GameSettingsState::OnMultiplayerClick() {
+void GameSettingsState::OnJoinClick() {
 	_data->stateManager.AddState(StateRef(new ClientState(_data)));
+}
+
+void GameSettingsState::OnHostClick() {
+	_data->stateManager.AddState(StateRef(new HostState(_data)));
 }
 
 void GameSettingsState::OnBackClick() {
@@ -171,30 +189,11 @@ void GameSettingsState::OnWidthDown() {
 void GameSettingsState::OnBombsUp() {
 	bombs++;
 	bombCountText.setString("Bombs: " + std::to_string(bombs));
-
-	if ((bombs % 10) != 0) return;
-
-	/*
-	bombsUP->Center();
-	bombsUP->GetSprite()->move(bombCountText.getGlobalBounds().width / 2 + bombsUP->GetSprite()->getGlobalBounds().width * 2, -bombCountText.getGlobalBounds().height / 2);
-
-	bombsDOWN->Center();
-	bombsDOWN->GetSprite()->move(bombCountText.getGlobalBounds().width / 2 + bombsDOWN->GetSprite()->getGlobalBounds().width * 2, bombsDOWN->GetSprite()->getGlobalBounds().height / 2);
-	*/
 }
 
 void GameSettingsState::OnBombsDown() {
 	bombs--;
 	bombCountText.setString("Bombs: " + std::to_string(bombs));
-
-	if ((bombs % 10) != 0) return;
-	/*
-	bombsUP->Center();
-	bombsUP->GetSprite()->move(bombCountText.getGlobalBounds().width / 2 + bombsUP->GetSprite()->getGlobalBounds().width * 2, -bombCountText.getGlobalBounds().height / 2);
-
-	bombsDOWN->Center();
-	bombsDOWN->GetSprite()->move(bombCountText.getGlobalBounds().width / 2 + bombsDOWN->GetSprite()->getGlobalBounds().width * 2, bombsDOWN->GetSprite()->getGlobalBounds().height / 2);
-	*/
 }
 
 void GameSettingsState::PollEvents(float dt) {

@@ -89,7 +89,7 @@ void ClientState::OnJoinClick() {
 	sf::IpAddress i = ipTextbox->GetValue();
 
 	std::cout << "Connecting to " << i.toString() << ":" << port << "\n";
-	//_data->stateManager.AddState(StateRef(new MainState(_data, port, i)));
+	_data->stateManager.AddState(StateRef(new MainState(_data, port, i)));
 }
 
 void ClientState::OnBackClick() {
