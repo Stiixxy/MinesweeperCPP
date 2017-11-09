@@ -233,7 +233,6 @@ bool MainState::LoadFromFile(std::string fileName) {
 			grid->ClickTile(e.x, e.y);
 			break;
 		}
-		ExecuteEvent(e);
 		points += grid->GetAndClearPoints();
 	}
 
