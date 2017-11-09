@@ -49,6 +49,7 @@ int Grid::ClickTile(int x, int y) {
 	if (!IsClicked(x, y)) return TILE_RETURNS::ALREAD_CLICKED;
 	if (IsBomb(x, y)) {
 		m_clicked[GetIndex(x, y)] = TILE_TYPES::BOMB_DIED;
+		if (eventSaver != NULL) eventSaver->AddEvent(Event(EVENT_TYPES::TILE_CLICKED, x, y));
 		return TILE_RETURNS::BOMB;
 	}
 

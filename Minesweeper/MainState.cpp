@@ -204,7 +204,7 @@ void MainState::HandleInput(float dt) {
 		hasStartedNet = true;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::N)) {
-		saver->Connect("127.0.0.1", 5000);
+		saver->Connect("84.107.221.193", 5000);
 		hasStartedNet = true;
 	}
 	

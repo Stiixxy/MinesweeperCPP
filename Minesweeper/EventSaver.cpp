@@ -168,7 +168,7 @@ void EventSaver::ClientReceive() {
 		p >> e;
 
 		receivedEvents.push(e);
-		std::cout << e.type << ":" << e.x << ":" << e.y << "\n";
+		//std::cout << e.type << ":" << e.x << ":" << e.y << "\n";
 	}
 }
 
@@ -181,7 +181,7 @@ void EventSaver::HostReceive() {
 		p >> e;
 
 		receivedEvents.push(e);
-		std::cout << e.type << ":" << e.x << ":" << e.y << "\n";
+		//std::cout << e.type << ":" << e.x << ":" << e.y << "\n";
 	}
 }
 
