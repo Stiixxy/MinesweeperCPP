@@ -1,6 +1,6 @@
 #include "GameSettingsState.h"
 #include "MainMenuState.h"
-#include "NetworkingTestState.h"
+#include "HostState.h"
 #include "GUIFunctions.h"
 
 #include <iostream>
@@ -141,7 +141,7 @@ void GameSettingsState::OnStartClick() {
 }
 
 void GameSettingsState::OnMultiplayerClick() {
-	_data->stateManager.AddState(StateRef(new NetworkingTestState(_data)));
+	_data->stateManager.AddState(StateRef(new HostState(_data)));
 }
 
 void GameSettingsState::OnBackClick() {
