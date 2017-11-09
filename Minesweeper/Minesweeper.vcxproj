@@ -152,6 +152,7 @@
   <ItemGroup>
     <ClCompile Include="AssetManager.cpp" />
     <ClCompile Include="Button.cpp" />
+    <ClCompile Include="ClientState.cpp" />
     <ClCompile Include="EventSaver.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameSettingsState.cpp" />
@@ -172,6 +173,7 @@
   <ItemGroup>
     <ClInclude Include="AssetManager.h" />
     <ClInclude Include="Button.h" />
+    <ClInclude Include="ClientState.h" />
     <ClInclude Include="DEFENITIONS.h" />
     <ClInclude Include="Event.h" />
     <ClInclude Include="EventSaver.h" />

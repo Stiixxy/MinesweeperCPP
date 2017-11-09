@@ -9,9 +9,9 @@
 #include "Button.h"
 #include "Button.cpp"
 
-class HostState : public State {
+class ClientState : public State {
 public:
-	HostState(GameDataRef data) : _data(data) {}
+	ClientState(GameDataRef data) : _data(data) {}
 
 	virtual void Init();
 	virtual void BeforeDestroy();
@@ -19,7 +19,7 @@ public:
 	virtual void Update(float dt);
 	virtual void Draw();
 
-	void OnHostClick();
+	void OnJoinClick();
 	void OnBackClick();
 
 private:
@@ -28,7 +28,12 @@ private:
 	sf::Text portText;
 	TextBox *portTextbox;
 
-	Button<HostState> *hostButton;
-	Button<HostState> *backButton;
+	sf::Text ipText;
+	TextBox *ipTextbox;
+
+	TextBox *activeTextBox;
+
+	Button<ClientState> *joinButton;
+	Button<ClientState> *backButton;
 
 };

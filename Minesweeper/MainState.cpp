@@ -37,6 +37,17 @@ void MainState::Init() {
 	//Create sound file
 	bombSound = sf::Sound(_data->assetManager.GetSound("bomb"));
 	applauseSound = sf::Sound(_data->assetManager.GetSound("applause"));
+
+	//Connect to network
+	if (_port == -1) {
+		if (_ip == sf::IpAddress::None) {
+			//Host
+			saver->Host(_port);
+		} else {
+			//Client
+			saver->Connect(_ip, _port);
+		}
+	}
 }
 
 void MainState::BeforeDestroy() {
@@ -194,18 +205,6 @@ void MainState::HandleInput(float dt) {
 			hasLoaded = true;
 			UpdateMap();
 		}
-	}
-
-	//Networking
-	static bool hasStartedNet = false;
-	if (hasStartedNet) return;
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::B)) {
-		saver->Host(5000);
-		hasStartedNet = true;
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::N)) {
-		saver->Connect("84.107.221.193", 5000);
-		hasStartedNet = true;
 	}
 	
 }

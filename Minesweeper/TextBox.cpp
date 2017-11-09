@@ -8,7 +8,7 @@ TextBox::TextBox(sf::Sprite s, sf::Font *f, GameDataRef data) : _sprite(s), _dat
 void TextBox::Update() {
 	_text.setPosition(_sprite.getPosition());
 	if (dotUpdateClock.getElapsedTime().asSeconds() > DOTTIME) {
-		hasDot ^= hasDot;
+		hasDot != hasDot;
 		UpdateString();
 	}
 }

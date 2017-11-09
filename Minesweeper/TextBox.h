@@ -27,7 +27,7 @@ public:
 	
 	sf::String GetValue();
 	sf::Sprite *GetSprite();
-public:
+private:
 	GameDataRef _data;
 
 	virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const;
