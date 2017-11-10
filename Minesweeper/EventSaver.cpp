@@ -205,6 +205,10 @@ void EventSaver::HostReceive() {
 	}
 }
 
+void EventSaver::AddToEventCounter(int i) {
+	eventCounter += i;
+}
+
 void EventSaver::ClientSend() {
 	while (1) {
 		while (unsentEvents.size() == 0) {

@@ -27,6 +27,7 @@ public:
 	void Pause();
 	void Resume();
 	void ClearEvents();
+	void AddToEventCounter(int i);
 
 	void Host(int port);
 	void Connect(sf::IpAddress host, int port);

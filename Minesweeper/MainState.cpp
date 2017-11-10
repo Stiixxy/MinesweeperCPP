@@ -62,6 +62,8 @@ void MainState::Update(float dt) {
 		e = saver->receivedEvents.front();
 		saver->receivedEvents.pop();
 		ExecuteEvent(e);
+		saver->AddEvent(e);
+		saver->AddToEventCounter(1);
 	}
 	while (saver->GetNextEvent(e)) {
 		saver->unsentEvents.push(e);
