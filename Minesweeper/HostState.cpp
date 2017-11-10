@@ -71,7 +71,7 @@ void HostState::OnHostClick() {
 	int port = std::stoi(s);
 
 	std::cout << "Creating game on " << port << "\n";
-	_data->stateManager.AddState(StateRef(new MainState(_data, port)));
+	_data->stateManager.AddState(StateRef(new MainState(_data, port, _gridSize, _bombs)));
 }
 
 void HostState::OnBackClick() {

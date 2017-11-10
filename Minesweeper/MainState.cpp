@@ -249,9 +249,14 @@ void MainState::ExecuteEvent(Event e) {
 	case EVENT_TYPES::GRID_CREATED:
 		grid = new Grid(e.x, e.y, saver);
 		newGridSize = sf::Vector2i(e.x, e.y);
+		newBombCount = 0;
+
+		gridView = sf::View(sf::FloatRect(0, 0, grid->GetSize().x * SPRITE_WIDTH, grid->GetSize().y * SPRITE_HEIGHT));
+		gridView.setViewport(sf::FloatRect(0, 1 - GRID_Y_PERCENTAGE, 1, GRID_Y_PERCENTAGE));
 		break;
 	case EVENT_TYPES::BOMB_ADDED:
 		grid->AddBomb(e.x, e.y);
+		newBombCount++;
 		break;
 	case EVENT_TYPES::FLAG_TOGGLED:
 		grid->ToggleFlag(e.x, e.y);

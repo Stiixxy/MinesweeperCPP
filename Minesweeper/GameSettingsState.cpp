@@ -159,7 +159,7 @@ void GameSettingsState::OnJoinClick() {
 }
 
 void GameSettingsState::OnHostClick() {
-	_data->stateManager.AddState(StateRef(new HostState(_data)));
+	_data->stateManager.AddState(StateRef(new HostState(_data, sf::Vector2i(gridWidth, gridHeight), bombs)));
 }
 
 void GameSettingsState::OnBackClick() {

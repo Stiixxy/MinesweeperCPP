@@ -11,7 +11,7 @@
 
 class HostState : public State {
 public:
-	HostState(GameDataRef data) : _data(data) {}
+	HostState(GameDataRef data, sf::Vector2i gridsize, int bombs) : _data(data), _gridSize(gridsize), _bombs(bombs) {}
 
 	virtual void Init();
 	virtual void BeforeDestroy();
@@ -30,5 +30,8 @@ private:
 
 	Button<HostState> *hostButton;
 	Button<HostState> *backButton;
+
+	sf::Vector2i _gridSize;
+	int _bombs;
 
 };

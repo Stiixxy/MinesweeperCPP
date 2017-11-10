@@ -21,8 +21,8 @@ class MainState : public State {
 public:
 	MainState(GameDataRef data, sf::Vector2i gridsize, int bombCount) : _data(data), newGridSize(gridsize), newBombCount(bombCount) {}
 	MainState(GameDataRef data, std::string save) : _data(data), loadSave(save) {}
-	MainState(GameDataRef data, int port) : _data(data), _port(port), newGridSize(10,10), newBombCount(4) {}
-	MainState(GameDataRef data, int port, sf::IpAddress ip) : _data(data), _port(port), _ip(ip), newGridSize(10, 10), newBombCount(4) {}
+	MainState(GameDataRef data, int port, sf::Vector2i gridsize, int bombCount) : _data(data), _port(port), newGridSize(gridsize), newBombCount(bombCount) {}
+	MainState(GameDataRef data, int port, sf::IpAddress ip) : _data(data), _port(port), _ip(ip) {}
 
 	virtual void Init();
 	virtual void BeforeDestroy(); //For cleanup
