@@ -63,6 +63,9 @@ void MainState::Update(float dt) {
 		saver->receivedEvents.pop();
 		ExecuteEvent(e);
 	}
+	while (saver->GetNextEvent(e)) {
+		saver->unsentEvents.push(e);
+	}
 	if (!_data->window.hasFocus()) return;
 	_data->window.setView(gridView);
 	HandleInput(dt);
@@ -105,10 +108,6 @@ void MainState::Update(float dt) {
 	}
 
 	points += grid->GetAndClearPoints();
-
-	while (saver->GetNextEvent(e)) {
-		saver->unsentEvents.push(e);
-	}
 
 	saveButton->Update();
 	if (saver->IsUpToDate()) {

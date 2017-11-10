@@ -10,6 +10,7 @@ void TextBox::Update() {
 	if (dotUpdateClock.getElapsedTime().asSeconds() > DOTTIME) {
 		hasDot = (hasDot) ? false : true;
 		UpdateString();
+		dotUpdateClock.restart();
 	}
 }
 

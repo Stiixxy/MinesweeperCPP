@@ -44,7 +44,7 @@ void HostState::BeforeDestroy() {
 }
 
 void HostState::Update(float dt) {
-	portTextbox->Update();
+	//portTextbox->Update();
 	hostButton->Update();
 	backButton->Update();
 

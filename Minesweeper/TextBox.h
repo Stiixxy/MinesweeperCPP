@@ -5,7 +5,7 @@
 
 #include <vector>
 
-#define DOTTIME 0.2
+#define DOTTIME 1
 #define TEXTCOLOR sf::Color::Red
 
 class TextBox : public sf::Drawable {

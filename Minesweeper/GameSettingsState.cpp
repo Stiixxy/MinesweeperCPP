@@ -8,11 +8,6 @@
 #include <ctime>
 #include <thread>
 
-/*
-TODO:
-	-implement multiplayer state and multiplayer host in mainstate
-*/
-
 void GameSettingsState::Init() {
 	_data->assetManager.LoadTexture("button image", "Resources/button.png");
 	_data->assetManager.LoadTexture("button arrow up", "Resources/arrowup.png");
