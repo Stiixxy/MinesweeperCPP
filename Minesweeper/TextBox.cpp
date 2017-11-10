@@ -8,7 +8,7 @@ TextBox::TextBox(sf::Sprite s, sf::Font *f, GameDataRef data) : _sprite(s), _dat
 void TextBox::Update() {
 	_text.setPosition(_sprite.getPosition());
 	if (dotUpdateClock.getElapsedTime().asSeconds() > DOTTIME) {
-		hasDot != hasDot;
+		hasDot = (hasDot) ? false : true;
 		UpdateString();
 	}
 }
@@ -16,6 +16,7 @@ void TextBox::Update() {
 void TextBox::SetValue(std::string value) {
 
 	_value = value;
+	UpdateString();
 
 }
 
@@ -35,6 +36,7 @@ void TextBox::AddKey(sf::Event keyEvent) {
 		//Backspace was pressed
 		if (_value.size() == 0)return;
 		_value.pop_back();
+		UpdateString();
 		return;
 	}
 	char c = static_cast<char>(keyEvent.text.unicode);

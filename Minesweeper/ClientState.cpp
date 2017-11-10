@@ -53,7 +53,6 @@ void ClientState::BeforeDestroy() {
 }
 
 void ClientState::Update(float dt) {
-	portTextbox->Update();
 	joinButton->Update();
 	backButton->Update();
 
@@ -61,6 +60,7 @@ void ClientState::Update(float dt) {
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) activeTextBox = NULL;
 	if (_data->inputManager.IsSpriteClicked(*portTextbox->GetSprite(), sf::Mouse::Left)) activeTextBox = portTextbox;
 	if (_data->inputManager.IsSpriteClicked(*ipTextbox->GetSprite(), sf::Mouse::Left)) activeTextBox = ipTextbox;
+	//if (activeTextBox != NULL) activeTextBox->Update();
 
 	sf::Event e;
 	while (_data->window.pollEvent(e)) {
