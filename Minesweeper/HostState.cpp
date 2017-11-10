@@ -68,6 +68,7 @@ void HostState::Draw() {
 }
 
 void HostState::OnHostClick() {
+	if (portTextbox->GetValue().isEmpty()) return;
 	std::string s = portTextbox->GetValue();
 	int port = std::stoi(s);
 

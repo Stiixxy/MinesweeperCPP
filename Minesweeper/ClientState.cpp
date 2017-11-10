@@ -85,6 +85,7 @@ void ClientState::Draw() {
 }
 
 void ClientState::OnJoinClick() {
+	if (portTextbox->GetValue().isEmpty() || ipTextbox->GetValue().isEmpty()) return;
 	std::string s = portTextbox->GetValue();
 	int port = std::stoi(s);
 	sf::IpAddress i = ipTextbox->GetValue();
