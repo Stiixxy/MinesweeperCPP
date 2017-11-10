@@ -246,6 +246,7 @@ void MainState::ExecuteEvent(Event e) {
 
 	switch (e.type) {
 	case EVENT_TYPES::GRID_CREATED:
+		if (!grid->HasWon()) points = 0;
 		grid = new Grid(e.x, e.y, saver);
 		newGridSize = sf::Vector2i(e.x, e.y);
 		newBombCount = 0;
