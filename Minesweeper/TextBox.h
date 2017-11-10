@@ -11,6 +11,7 @@
 class TextBox : public sf::Drawable {
 public:
 	TextBox(sf::Sprite, sf::Font*, GameDataRef data);
+	TextBox(sf::Sprite, sf::Font*, GameDataRef data, std::string background);
 
 	void Update();
 
@@ -21,6 +22,7 @@ public:
 	void CenterText();
 
 	void SetValue(std::string value);
+	void SetBackgroundText(std::string value);
 
 	void Init(sf::String s, int maxLength);
 
@@ -38,8 +40,6 @@ private:
 	sf::Sprite _sprite;
 	sf::Text _text;
 
-	sf::Clock dotUpdateClock;
 	std::string _value;
-
-	bool hasDot = false;
+	std::string backgroundString;
 };

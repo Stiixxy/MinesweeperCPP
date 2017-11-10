@@ -5,13 +5,13 @@ TextBox::TextBox(sf::Sprite s, sf::Font *f, GameDataRef data) : _sprite(s), _dat
 	_text.setFillColor(TEXTCOLOR);
 }
 
+TextBox::TextBox(sf::Sprite s, sf::Font *f, GameDataRef data, std::string background) : _sprite(s), _data(data), backgroundString(background) {
+	_text.setFont(*f);
+	_text.setFillColor(TEXTCOLOR);
+}
+
 void TextBox::Update() {
 	_text.setPosition(_sprite.getPosition());
-	if (dotUpdateClock.getElapsedTime().asSeconds() > DOTTIME) {
-		hasDot = (hasDot) ? false : true;
-		UpdateString();
-		dotUpdateClock.restart();
-	}
 }
 
 void TextBox::SetValue(std::string value) {
@@ -22,11 +22,26 @@ void TextBox::SetValue(std::string value) {
 }
 
 void TextBox::UpdateString() {
-	sf::String s = GetValue();
-	if (hasDot) s += ".";
+	sf::String s;
+	if (GetValue().isEmpty()) {
+		s = backgroundString;
+		sf::Color newColor = _text.getColor();
+		newColor.a = 125;
+		_text.setColor(newColor);
+	} else {
+		s = GetValue();
+		sf::Color newColor = _text.getColor();
+		newColor.a = 255;
+		_text.setColor(newColor);
+	}
+	
 	_text.setString(s);
 	AutoSetFontSize(.8);
 	CenterText();
+}
+
+void TextBox::SetBackgroundText(std::string value) {
+	backgroundString = value;
 }
 
 void TextBox::AddKey(sf::Event keyEvent) {

@@ -13,7 +13,7 @@ void HostState::Init() {
 	_data->assetManager.LoadTexture("button image", "Resources/button.png");
 	_data->assetManager.LoadFont("button font", "Resources/SOTA.ttf");
 
-	portTextbox = new TextBox(sf::Sprite(_data->assetManager.GetTexture("button image")), &_data->assetManager.GetFont("button font"), _data);
+	portTextbox = new TextBox(sf::Sprite(_data->assetManager.GetTexture("button image")), &_data->assetManager.GetFont("button font"), _data, "Port");
 	portTextbox->Center();
 	portTextbox->GetSprite()->move(0, _data->window.getSize().y * -.25);
 	portTextbox->SetValue("5000");

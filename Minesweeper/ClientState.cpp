@@ -13,7 +13,7 @@ void ClientState::Init() {
 	_data->assetManager.LoadTexture("button image", "Resources/button.png");
 	_data->assetManager.LoadFont("button font", "Resources/SOTA.ttf");
 
-	portTextbox = new TextBox(sf::Sprite(_data->assetManager.GetTexture("button image")), &_data->assetManager.GetFont("button font"), _data);
+	portTextbox = new TextBox(sf::Sprite(_data->assetManager.GetTexture("button image")), &_data->assetManager.GetFont("button font"), _data, "Port");
 	portTextbox->Center();
 	portTextbox->GetSprite()->move(0, _data->window.getSize().y * -.25);
 	portTextbox->SetValue("5000");
@@ -23,7 +23,7 @@ void ClientState::Init() {
 	CenterText(portText, _data->window);
 	portText.move(0, _data->window.getSize().y * -.25 - portTextbox->GetSprite()->getGlobalBounds().height);
 
-	ipTextbox = new TextBox(sf::Sprite(_data->assetManager.GetTexture("button image")), &_data->assetManager.GetFont("button font"), _data);
+	ipTextbox = new TextBox(sf::Sprite(_data->assetManager.GetTexture("button image")), &_data->assetManager.GetFont("button font"), _data, "IP");
 	ipTextbox->Center();
 	ipTextbox->SetValue("127.0.0.1");
 
