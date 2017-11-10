@@ -68,10 +68,11 @@ void MainState::Update(float dt) {
 	while (saver->GetNextEvent(e)) {
 		saver->unsentEvents.push(e);
 	}
+	points += grid->GetAndClearPoints();
+	gui->Update();
 	if (!_data->window.hasFocus()) return;
 	_data->window.setView(gridView);
 	HandleInput(dt);
-	gui->Update();
 
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && _alive && !grid->HasWon()) {
 		if (!_clickedLastFrame) {
@@ -108,8 +109,6 @@ void MainState::Update(float dt) {
 	if (_alive && !grid->HasWon()) {
 		playTime += dt;
 	}
-
-	points += grid->GetAndClearPoints();
 
 	saveButton->Update();
 	if (saver->IsUpToDate()) {
