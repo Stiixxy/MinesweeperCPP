@@ -13,6 +13,12 @@ void TextBox::Update() {
 	}
 }
 
+void TextBox::SetValue(std::string value) {
+
+	_value = value;
+
+}
+
 void TextBox::UpdateString() {
 	sf::String s = GetValue();
 	if (hasDot) s += ".";
@@ -74,11 +80,7 @@ void TextBox::AutoSetFontSize(float percent) {
 void TextBox::Init(sf::String s, int maxLength) {}
 
 sf::String TextBox::GetValue() {
-	sf::String s = "";
-	for (int i = 0; i < _value.size(); i++) {
-		s += _value.at(i);
-	}
-	return s;
+	return _value;
 }
 
 sf::Sprite *TextBox::GetSprite() {

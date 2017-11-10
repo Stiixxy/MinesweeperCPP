@@ -20,6 +20,8 @@ public:
 	void AutoSetFontSize(float percent = 1);
 	void CenterText();
 
+	void SetValue(std::string value);
+
 	void Init(sf::String s, int maxLength);
 
 	void AddKey(sf::Event keyEvent);
@@ -37,7 +39,7 @@ private:
 	sf::Text _text;
 
 	sf::Clock dotUpdateClock;
-	std::vector<char> _value;
+	std::string _value;
 
 	bool hasDot = false;
 };

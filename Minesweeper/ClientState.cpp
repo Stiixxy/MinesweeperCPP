@@ -16,6 +16,7 @@ void ClientState::Init() {
 	portTextbox = new TextBox(sf::Sprite(_data->assetManager.GetTexture("button image")), &_data->assetManager.GetFont("button font"), _data);
 	portTextbox->Center();
 	portTextbox->GetSprite()->move(0, _data->window.getSize().y * -.25);
+	portTextbox->SetValue("5000");
 
 	portText = sf::Text("Port:", _data->assetManager.GetFont("button font"));
 	portText.setColor(sf::Color::Red);
@@ -24,7 +25,7 @@ void ClientState::Init() {
 
 	ipTextbox = new TextBox(sf::Sprite(_data->assetManager.GetTexture("button image")), &_data->assetManager.GetFont("button font"), _data);
 	ipTextbox->Center();
-	//ipTextbox->GetSprite()->move(0, _data->window.getSize().y * -.25);
+	ipTextbox->SetValue("127.0.0.1");
 
 	ipText = sf::Text("IP:", _data->assetManager.GetFont("button font"));
 	ipText.setColor(sf::Color::Red);

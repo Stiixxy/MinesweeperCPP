@@ -16,6 +16,7 @@ void HostState::Init() {
 	portTextbox = new TextBox(sf::Sprite(_data->assetManager.GetTexture("button image")), &_data->assetManager.GetFont("button font"), _data);
 	portTextbox->Center();
 	portTextbox->GetSprite()->move(0, _data->window.getSize().y * -.25);
+	portTextbox->SetValue("5000");
 
 	portText = sf::Text("Port:", _data->assetManager.GetFont("button font"));
 	portText.setColor(sf::Color::Red);
