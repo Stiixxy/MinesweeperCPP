@@ -106,15 +106,23 @@ void EventSaver::Connect(sf::IpAddress host, int port) {
 
 void EventSaver::HostSend() {
 
-	host.listen(_port);
-	host.accept(client);
+	if (host.listen(_port)) {
+		return;
+	}
+	if(host.accept(client)) {
+		return;
+	}
 
 	sf::Packet p;
 	std::string text = "Ping received";
 	p << text;
 
-	client.send(p);
-	client.receive(p);
+	if(client.send(p)) {
+		return;
+	}
+	if(client.receive(p)) {
+		return;
+	}
 
 	p >> text;
 	std::cout << text << "\n";
@@ -129,7 +137,9 @@ void EventSaver::HostSend() {
 		sf::Packet  sendPacket;
 		sendPacket << unsentEvents.front();
 		unsentEvents.pop();
-		client.send(sendPacket);
+		if (client.send(sendPacket)) {
+			return;
+		}
 	}
 
 }
@@ -141,10 +151,14 @@ void EventSaver::ClientReceive() {
 	eventCounter = 0;
 
 	sf::IpAddress ip = sf::IpAddress(_host);
-	client.connect(ip, _port);
+	if (client.connect(ip, _port)) {
+		return;
+	}
 
 	sf::Packet p;
-	client.receive(p);
+	if (client.receive(p)) {
+		return;
+	}
 
 	std::string text;
 	p >> text;
@@ -155,14 +169,18 @@ void EventSaver::ClientReceive() {
 	p = sf::Packet();
 	p << text;
 
-	client.send(p);
+	if (client.send(p)) {
+		return;
+	}
 
 	sendThread = new sf::Thread(&EventSaver::ClientSend, this);
 	sendThread->launch();
 
 	while (1) {
 		sf::Packet p;
-		client.receive(p);
+		if (client.receive(p)) {
+			return;
+		}
 
 		Event e;
 		p >> e;
@@ -175,7 +193,9 @@ void EventSaver::ClientReceive() {
 void EventSaver::HostReceive() {
 	while (1) {
 		sf::Packet p;
-		client.receive(p);
+		if (client.receive(p)) {
+			return;
+		}
 
 		Event e;
 		p >> e;
@@ -193,6 +213,8 @@ void EventSaver::ClientSend() {
 		sf::Packet  sendPacket;
 		sendPacket << unsentEvents.front();
 		unsentEvents.pop();
-		client.send(sendPacket);
+		if (client.send(sendPacket)) {
+			return;
+		}
 	}
 }

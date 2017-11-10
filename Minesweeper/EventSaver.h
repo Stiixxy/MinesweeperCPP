@@ -40,8 +40,8 @@ private:
 	bool _paused = false;
 	bool _upToDate = true;
 
-	bool _isNetworked;
-	bool _isHost;
+	//bool _isNetworked;
+	//bool _isHost;
 
 	sf::TcpListener host;
 	sf::TcpSocket client;
