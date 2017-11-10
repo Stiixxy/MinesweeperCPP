@@ -165,6 +165,7 @@
     <ClCompile Include="MainState.cpp" />
     <ClCompile Include="MainStateGui.cpp" />
     <ClCompile Include="NetworkingTestState.cpp" />
+    <ClCompile Include="PausedState.cpp" />
     <ClCompile Include="SplashState.cpp" />
     <ClCompile Include="StateManager.cpp" />
     <ClCompile Include="TextBox.cpp" />
@@ -187,6 +188,7 @@
     <ClInclude Include="MainState.h" />
     <ClInclude Include="MainStateGui.h" />
     <ClInclude Include="NetworkingTestState.h" />
+    <ClInclude Include="pausedState.h" />
     <ClInclude Include="SplashState.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="StateManager.h" />

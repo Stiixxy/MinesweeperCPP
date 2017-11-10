@@ -26,6 +26,10 @@ void AssetManager::LoadFont(std::string name, std::string fileName) {
 
 void AssetManager::LoadSound(std::string name, std::string filename) {
 
+	if (_sounds.find(name) != _sounds.end()) {
+		return;
+	}
+
 	sf::SoundBuffer buffer;
 
 	if (buffer.loadFromFile(filename)) {

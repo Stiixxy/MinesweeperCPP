@@ -1,6 +1,7 @@
 #include "DEFENITIONS.h"
 #include "MainState.h" 
 #include "EventSaver.h"
+#include "pausedState.h"
 #include "Event.h"
 #include <iostream>
 
@@ -192,19 +193,15 @@ void MainState::HandleInput(float dt) {
 		rWasPressed = false;
 	}
 
-	//Save and load game
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::X)) {
-		if (saver->SaveEventsToFile(DEFAULT_SAVE_PATH)) {
-			printf("Succesfully saved game\n");
+	//Pause
+	static bool escapePressed = true;
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
+		if (!escapePressed) {
+			_data->stateManager.AddState(StateRef(new PausedState(_data)), false);
+			escapePressed = true;
 		}
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::L)) {
-		static bool hasLoaded = false;
-		if (!hasLoaded) {
-			LoadFromFile(DEFAULT_SAVE_PATH);
-			hasLoaded = true;
-			UpdateMap();
-		}
+	} else {
+		escapePressed = false;
 	}
 	
 }
